@@ -270,8 +270,9 @@ public class Persistencia {
      /*********************************Vuelos Diarios*****************************************************/
     //recupera toda la informacion de los vuelos diarios del csv y los guarda en una variable DocuemntoCsv
     private static DocumentoCsv extraerDatosVuelosDiariosCsv(){
+        
         if(VUELOS_DIARIOS.exists()& VUELOS_DIARIOS.length()!=0){
-         // recupera los datos del csv en una lista de string el numero de lineas total, cada linea va a ocupar 6 datos  
+         // recupera los datos del csv en una lista de string el numero de lineas total, cada linea va a ocupar 6 datos 
          DocumentoCsv csv=new DocumentoCsv();
          ApiCsv apiCsv=new ApiCsv();
          csv=apiCsv.leerCSV(VUELOS_DIARIOS);
@@ -298,7 +299,7 @@ public class Persistencia {
                  VueloDiario vueloD=new VueloDiario(temp.get(0), parseStrinDate(temp.get(1)),
                          parseStringLocalTime(temp.get(2)),parseStringLocalTime(temp.get(3))
                          ,Integer.parseInt(temp.get(4)),Double.parseDouble( temp.get(5)));
-                 LogicaNegocio.anaidirListaVueloDiario(vueloD);
+                 LogicaNegocio.anaidirVueloDiarioLista(vueloD);
                  j=0;
                  temp.clear();
                 }

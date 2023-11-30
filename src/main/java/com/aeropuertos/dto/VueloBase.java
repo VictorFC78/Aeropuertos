@@ -5,6 +5,7 @@ package com.aeropuertos.dto;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -108,7 +109,7 @@ public class VueloBase {
         }
         return null;
     }
-     public boolean eliminarVueloDiario(LocalTime fecha){
+     public boolean eliminarVueloDiario(Date fecha){
          Iterator<VueloDiario> it=vuelosDiario.iterator();
          VueloDiario v;
          while(it.hasNext()){

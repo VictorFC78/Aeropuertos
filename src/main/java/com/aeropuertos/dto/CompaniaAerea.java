@@ -104,7 +104,8 @@ public class CompaniaAerea implements Serializable{
     @Override
     public boolean equals(Object obj) {
         CompaniaAerea compania=(CompaniaAerea)obj;
-        if (this.getCodigo().equals(compania.getCodigo()))return true;
+        if (this.getCodigo().equals(compania.getCodigo()) 
+                || this.getNombre().equals(compania.getNombre())) return true;
         return false;
     }
    

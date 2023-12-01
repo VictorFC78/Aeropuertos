@@ -63,7 +63,7 @@ public class Persistencia {
             temp.add(csv.getElemnto(i));
             indice++;
             if (indice == datosLinea) {
-                LogicaNegocio.anaidirAeropuerto(new Aeropuerto(temp.get(0), temp.get(1), temp.get(2)));
+                LogicaNegocio.anaidirAeropuertoPersintencia(new Aeropuerto(temp.get(0), temp.get(1), temp.get(2)));
                 indice = 0;
                 temp.clear();
             }
@@ -175,7 +175,7 @@ public class Persistencia {
                 int plazas=Integer.parseInt(temp.get(1));
                 VueloBase vuelo=new VueloBase(codigo,origen,destino,plazas,
                         parseStringLocalTime(hSalida),parseStringLocalTime(hLlegada),diasOpera);
-                LogicaNegocio.anaidirVueloBase(vuelo);
+                LogicaNegocio.anaidirVueloBasePersistencia(vuelo);
                 temp.clear();
                 j=0;
             }

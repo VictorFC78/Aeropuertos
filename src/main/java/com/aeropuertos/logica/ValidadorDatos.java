@@ -14,23 +14,34 @@ import static java.time.DayOfWeek.THURSDAY;
 import static java.time.DayOfWeek.TUESDAY;
 import static java.time.DayOfWeek.WEDNESDAY;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
 
 public class ValidadorDatos {
-   public static final String numerotlf="Formato:codigo pais + numero de hasta 12 digitos";
-   public static final String prefijo="Formato:numero comprendido entre 1 y 999";
-   public static final String codigo="Formato:dos vocales mayusculas o vocal mayuscula y digito";
+   private static final String numerotlf="Formato:codigo pais + numero de hasta 12 digitos";
+   private static final String prefijo="Formato:numero comprendido entre 1 y 999";
+   private static final String codigo="Formato:dos vocales mayusculas o vocal mayuscula y digito";
+   private static final SimpleDateFormat formatoHora=new SimpleDateFormat("HH:mm");
+   private static final SimpleDateFormat formatoFecha=new SimpleDateFormat("dd/MM/yyyy");
     public static boolean formatoTelefono(String numTelf,Component p){
         if(numTelf.matches("[+]\\d{11,14}")){
             return true;
-        }else{
+        }else{ 
             mostarErrores(numerotlf,"ERROR FORMATO TELEFONO",p);
             return false;
         }
         
+    }
+
+    public static SimpleDateFormat getFormatoHora() {
+        return formatoHora;
+    }
+
+    public static SimpleDateFormat getFormatoFecha() {
+        return formatoFecha;
     }
     
     public static  boolean formatoCodigoCompania(String codigo,Component p){
@@ -120,6 +131,20 @@ public class ValidadorDatos {
         else if(precio.matches("\\d+")) return true;
         return false;
         
+    }
+    //compreba que una hora pasada por primer parametro es mayor menor o igual
+    public static int compararHoras(Date date1,Date date2){
+        //para poder comparar horas tenemos usar la clase LOCALTIME
+        LocalTime localTime1=parseDateLocalTime(date1);//conseguimos un localtime con la hora del date fecha1
+        LocalTime localTime2=parseDateLocalTime(date2);;//conseguimos un localtime con la hora del date fecha1
+        return localTime1.compareTo(localTime2);
+    }
+    //parsea un Date a LocatIme
+    public static LocalTime parseDateLocalTime(Date date){
+        //para poder comparar horas tenemos usar la clase LOCALTIME
+        String dateString=formatoHora.format(date);//string del date con el formato HH:mm
+        LocalTime dateLocalTime=LocalTime.parse(dateString);//conseguimos un localtime con la hora del date fecha1
+        return dateLocalTime;
     }
     protected static void mostarErrores(String mensaje,String titulo,Component p){    
         JOptionPane.showMessageDialog(p, mensaje,titulo,JOptionPane.ERROR_MESSAGE);

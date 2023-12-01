@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 
@@ -62,6 +63,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         mnuEliminar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         comboBoxAeropuertos.setToolTipText("");
 
@@ -194,12 +200,13 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     private void mnuCrearCmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCrearCmpActionPerformed
  //crear un dialogo de insertar compañias
-      DarAltaCompania darAltaCompania=new DarAltaCompania(this, true);
+      DarAltaCompania darAltaCompania=new DarAltaCompania(new JDialog(), true);
       darAltaCompania.setVisible(true);
     }//GEN-LAST:event_mnuCrearCmpActionPerformed
 
     private void mnuModificarCmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuModificarCmpActionPerformed
-      
+      ModificarCompaniaAerea modificar=new ModificarCompaniaAerea(this, true);
+      modificar.setVisible(true);
     }//GEN-LAST:event_mnuModificarCmpActionPerformed
 
     private void mnuConsultarCmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuConsultarCmpActionPerformed
@@ -208,15 +215,18 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuConsultarCmpActionPerformed
 
     private void mnuCrearVueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCrearVueloActionPerformed
-     
+     DarAltaVuelosBase darAltaVuelosBase=new DarAltaVuelosBase(this, true);
+     darAltaVuelosBase.setVisible(true);
     }//GEN-LAST:event_mnuCrearVueloActionPerformed
 
     private void mnuConsultarVueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuConsultarVueloActionPerformed
-      
+      ConsultarVuelosBase vuelosBase=new ConsultarVuelosBase(this, true);
+      vuelosBase.setVisible(true);
     }//GEN-LAST:event_mnuConsultarVueloActionPerformed
 
     private void mnuEliminarVueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEliminarVueloActionPerformed
-   
+   DarBajaVueloBase bajaVueloBase=new DarBajaVueloBase(this, true);
+   bajaVueloBase.setVisible(true);
     }//GEN-LAST:event_mnuEliminarVueloActionPerformed
 
     private void mnuEliminarCmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEliminarCmpActionPerformed
@@ -254,6 +264,13 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             mnuVuelosDiarios.setEnabled(true);
         }
     }//GEN-LAST:event_btnSeleccionarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        System.out.println("Lista final compañias:"+LogicaNegocio.getListaCompaniasAereas().size());
+        System.out.println("Lista final vuelos base:"+LogicaNegocio.getListaVueloBase().size());
+        System.out.println("Lista final vuelos diarios:"+LogicaNegocio.getListaVuelosDIarios().size());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
 
    
 

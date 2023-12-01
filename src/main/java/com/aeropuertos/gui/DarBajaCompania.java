@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  * @author 34675
  */
 public class DarBajaCompania extends javax.swing.JDialog {
-
+private int  filaSeleccionada;
 private CompaniaAerea compania=null;
     public DarBajaCompania(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -24,7 +24,7 @@ private CompaniaAerea compania=null;
        refrescarTabla();
     }
     private void refrescarTabla(){
-       
+       filaSeleccionada=-1;
         String [] columnames={"Codigo","Nombre","Direccion","Municipio","Tlf.Aeropuerto","Tlf.Pasajeros"};
         DefaultTableModel modelo=new DefaultTableModel(LogicaNegocio.datosCompaniasAereas(), columnames);
         jTable1.setModel(modelo);
@@ -122,22 +122,26 @@ private CompaniaAerea compania=null;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int opcion=jTable1.getSelectedRow();
-        if(opcion==-1){
-        }else{
-            compania=LogicaNegocio.getCompaniaAerea(opcion);
-            lblCompSelect.setText(compania.getCodigo());
-            lblCompSelect.setVisible(true);
-        }
+         filaSeleccionada=jTable1.getSelectedRow();
+        if(filaSeleccionada!=-1){
+        filaSeleccionada=jTable1.getSelectedRow();
+        compania=LogicaNegocio.getCompaniaAerea(filaSeleccionada);
+        lblCompSelect.setText(compania.getCodigo());
+        lblCompSelect.setVisible(true);
+        }    
+        
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-     int opcion=JOptionPane.showConfirmDialog(this,"Va a eliminar la compañia "+compania.getCodigo(),"ELIMINAR COMPAÑIA", JOptionPane.YES_NO_OPTION);
-        System.out.println(opcion);
-        if(opcion==0){
-            //eliminamos la compañia
-           LogicaNegocio.eliminarCompaniaAerea(compania.getCodigo());
-            refrescarTabla();
+        if(filaSeleccionada!=-1){
+        int opcion=JOptionPane.showConfirmDialog(this,"Va a eliminar la compañia "+compania.getCodigo(),"ELIMINAR COMPAÑIA", JOptionPane.YES_NO_OPTION);
+            if(opcion==0){
+                //eliminamos la compañia
+                LogicaNegocio.eliminarCompaniaAerea(compania.getCodigo());
+                refrescarTabla();
+            }
+        }else{
+           JOptionPane.showMessageDialog(this, "No hay compañia sellecionada"); 
         }   
     }//GEN-LAST:event_btnAceptarActionPerformed
 

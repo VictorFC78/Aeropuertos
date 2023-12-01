@@ -125,13 +125,8 @@ public class VueloBase {
     @Override
     public boolean equals(Object obj) {
         VueloBase vuelo=(VueloBase)obj;
-        if(this.getCodigo().equals(vuelo.getCodigo())
-           & (this.getOrigen().getIata().equals(vuelo.getOrigen().getIata()))
-           & (this.getDestino().getIata().equals(vuelo.getDestino().getIata()))
-           & (this.getHoraSalida().equals(vuelo.getHoraSalida()))
-           & (this.getHoraLlegada().equals(vuelo.getHoraLlegada()))
-           & (this.getDiasOpera().equals(vuelo.getDiasOpera()))) return true;
-        return false;
+        return this.getCodigo().equals(vuelo.getCodigo());   
+       
     }
     
 }  

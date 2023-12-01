@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 public class DarAltaCompania extends javax.swing.JDialog {
     
     
-    public DarAltaCompania(javax.swing.JFrame parent, boolean modal) {
+    public DarAltaCompania(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setTitle("DAR ALTA COMPAÑIA NUEVA");

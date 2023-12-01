@@ -10,7 +10,6 @@ import com.aeropuertos.dto.VueloBase;
 import com.aeropuertos.dto.VueloDiario;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.time.chrono.ThaiBuddhistEra;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -48,7 +47,7 @@ public class LogicaNegocio {
        return aeropuertoOrigen;
     }
     //añadir un aeropuerto a la lista
-    public static void anaidirAeropuerto(Aeropuerto aeropuerto){
+    public static void anaidirAeropuertoPersintencia(Aeropuerto aeropuerto){
         listaAeropuertos.add(aeropuerto);
     }
     //lista de areopueros sin el aeropuerto de origen
@@ -84,19 +83,26 @@ public class LogicaNegocio {
     }
     //eliminar una compania por codigo
     public static boolean eliminarCompaniaAerea(String codigo){
+        int pos=buscarVuelobaseCodigo(codigo);
+        eliminarVueloBase(listaVueloBase.get(pos).getCodigo());
         Iterator<CompaniaAerea> it=listaCompaniaAerea.iterator();
         while(it.hasNext()){
             if(it.next().getCodigo().equals(codigo)){
                 it.remove();
                 return true;
             }
+            
+            
+            
+            
         }
        return false; 
     }
-    //añade una compañia aerea a la lista
+    //añade una compañia aerea a la lista en la persistencia
     public static void anaidirCompaniaAerea(CompaniaAerea compania){
         listaCompaniaAerea.add(compania);
     }
+ 
     //modifica los datos de una compañia sin modificar su nombre ni su codigo
     public static void  modificarCompaniaAerea(String codigo,String direccion,String municipio,String tlfArpto,String tlfPajro){
         int prefijo=0;
@@ -136,8 +142,16 @@ public class LogicaNegocio {
     
     /************************** Vuelos Base********************************************/
     //añadir un vuelo a la lista de vuelos base
-    public static void  anaidirVueloBase(VueloBase vuelo){
+    public static void  anaidirVueloBasePersistencia(VueloBase vuelo){
         listaVueloBase.add(vuelo);
+    }
+    //anñade vuelo base a la lista desde l GUI si no existe coincidencia en la,lista
+    public static boolean anaidirVueloBaseGUI(VueloBase vuelo){
+        for (VueloBase v:listaVueloBase){
+            if (v.equals(vuelo))return false;
+        }
+        listaVueloBase.add(vuelo);
+        return true;
     }
     //recupera la lista de vuelos base 
     public static List<VueloBase> getListaVueloBase(){
@@ -149,6 +163,10 @@ public class LogicaNegocio {
             if (v.getCodigo().equals(codigo)) return v;
         }
         return null;
+    }
+    //recupera un vuelo base por posicion
+    public static VueloBase getVueloBase(int pos){
+        return listaVueloBase.get(pos);
     }
      //elimina un vuelo segun su codigo segun su codigo
     public static boolean eliminarVueloBase(String codigo){
@@ -194,7 +212,8 @@ public class LogicaNegocio {
     //busca un vuelo base por codigo y devuelve su posicion en la lista y -1 sino existe
     private static int buscarVuelobaseCodigo(String codigo){
         for (int i=0;i<listaVueloBase.size();i++){
-            if (listaVueloBase.get(i).getCodigo().equals(codigo)) return i;
+            if (listaVueloBase.get(i).getCodigo().equals(codigo)
+                    ||listaVueloBase.get(i).getCodigo().contains(codigo)) return i;
         }
         return -1;
     }
@@ -264,10 +283,8 @@ public class LogicaNegocio {
     public static void referenciarVuelosDiarioVueloBase(){
         //iteramos en la lista de vuelos diarios buscando que vuelo base contienen el mismo codigo para añadirselo
         for (VueloDiario v:listasVueloDiarioCsv){
-            System.out.println("Vuelo base:"+v.getCodigo());
             VueloBase vb=getVueloBase(v.getCodigo());//recupera el vuelo seguncodifo, codigo vuelo y codigo vuelo diario es el mismo
             vb.anaidirVueloDiario(v);//le añade el vuelo diario al vuelo base
-            System.out.println("Vuelo diario:"+v.getFechaVuelo());
         }
     } 
 

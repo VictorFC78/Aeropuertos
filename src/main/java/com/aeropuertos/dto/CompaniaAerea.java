@@ -99,8 +99,13 @@ public class CompaniaAerea implements Serializable{
     public static void inicializarPrefijo(int valor){
         incPref=valor;
     }
- 
 
+    @Override
+    public String toString() {
+        return  nombre ;
+    }
+ 
+    
     @Override
     public boolean equals(Object obj) {
         CompaniaAerea compania=(CompaniaAerea)obj;

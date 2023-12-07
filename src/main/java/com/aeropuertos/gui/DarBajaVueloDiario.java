@@ -5,8 +5,8 @@
 package com.aeropuertos.gui;
 
 import com.aeropuertos.dto.VueloBase;
+import com.aeropuertos.dto.VueloDiario;
 import com.aeropuertos.logica.LogicaNegocio;
-import com.aeropuertos.persistencia.Persistencia;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -15,25 +15,24 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author 34675
  */
-public class DarBajaVueloBase extends javax.swing.JDialog {
+public class DarBajaVueloDiario extends javax.swing.JDialog {
 
-   private int filaseleccionada;
-    public DarBajaVueloBase(java.awt.Frame parent, boolean modal) {
+  private int filaSeleccionada;
+  private VueloDiario vueloDiario;
+    public DarBajaVueloDiario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        filaseleccionada=-1;
-       refrescatTabla();
-
+        refrescarDatos();
+        
     }
-    private  void refrescatTabla(){
-        String[] columnames = {"Codigo", "Aeropuerto Origen", "Aeropuerto Destino", "Hora Salida", "Hora Llegada", "Plazas", "D Opera"};
-        DefaultTableModel modelo = new DefaultTableModel(LogicaNegocio.datosVueloBase(), columnames);
+    private void refrescarDatos(){
+        String[] columnames={"Codigo","Fecha","H.Salida","H.Llegada","Plazas Ocupadas","Precio"};
+        Object[][]datos=LogicaNegocio.extraerDatosVuelosDiarios();
+        DefaultTableModel modelo=new DefaultTableModel(datos, columnames);
         tabla.setModel(modelo);
-        lblVueloBase.setVisible(false);
-        filaseleccionada=-1;
- 
+        lblDatos.setVisible(false);
+        filaSeleccionada=-1;
     }
-       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,10 +44,10 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
-        btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        lblVueloBase = new javax.swing.JLabel();
+        lblDatos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -59,13 +58,6 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tabla);
 
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,12 +65,17 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("VUELO BASE");
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
-        lblVueloBase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblVueloBase.setForeground(new java.awt.Color(255, 0, 153));
-        lblVueloBase.setText("jLabel2");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("VUELO DIARIO");
+
+        lblDatos.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,14 +84,14 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblVueloBase)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEliminar)
-                        .addGap(5, 5, 5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSalir)))
                 .addContainerGap())
         );
@@ -102,13 +99,15 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnSalir)
-                    .addComponent(jLabel1)
-                    .addComponent(lblVueloBase))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnSalir)
+                        .addComponent(btnEliminar))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(lblDatos)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -116,26 +115,30 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        filaseleccionada=tabla.getSelectedRow();
-        if(filaseleccionada!=-1){
-            VueloBase vuelo=LogicaNegocio.getVueloBase(filaseleccionada);
-           int opcion=JOptionPane.showConfirmDialog(this,"Va a eliminar el vuelo "+vuelo.getCodigo(),"ELIMINAR VUELO BASE", JOptionPane.YES_NO_OPTION);
-           if (opcion==0){
-               LogicaNegocio.eliminarVueloBase(vuelo.getCodigo());
-               refrescatTabla();
+
+    if(filaSeleccionada!=-1){
+    int opcion=JOptionPane.showConfirmDialog(this,"Va a eliminar el vuelo diario "+vueloDiario.getCodigo(),"ELIMINAR VUELO BASE", JOptionPane.YES_NO_OPTION);
+    if (opcion==0){
+               LogicaNegocio.eliminarVueloDiarioVueloBase(vueloDiario);
+               refrescarDatos();
            }
-        }else JOptionPane.showMessageDialog(this, "No hay vuelo sellecionado");
+        }else JOptionPane.showMessageDialog(this, "No hay vuelo seleccionado");
         
+
+
+
 
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-        filaseleccionada=tabla.getSelectedRow();
-        if(filaseleccionada!=-1){
+        filaSeleccionada=tabla.getSelectedRow();
+        if(filaSeleccionada!=-1){
+            vueloDiario=LogicaNegocio.getVueloDiarioistaActual(filaSeleccionada);
+            SimpleDateFormat formato=new SimpleDateFormat("dd/MM/yyyy");
+            String fecha=formato.format(vueloDiario.getFechaVuelo());
             
-        VueloBase vuelo=LogicaNegocio.getVueloBase(filaseleccionada);
-        lblVueloBase.setText(vuelo.getCodigo());
-        lblVueloBase.setVisible(true);
+            lblDatos.setText(vueloDiario.getCodigo()+" "+fecha);
+            lblDatos.setVisible(true);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_tablaMouseClicked
@@ -145,17 +148,12 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-   
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblVueloBase;
+    private javax.swing.JLabel lblDatos;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }

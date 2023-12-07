@@ -2,6 +2,7 @@ package com.aeropuertos.gui;
 
 import com.aeropuertos.dto.Aeropuerto;
 import com.aeropuertos.logica.LogicaNegocio;
+import java.awt.Dialog;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -24,7 +25,7 @@ import javax.swing.JOptionPane;
 public class PantallaPrincipal extends javax.swing.JFrame {
 
    private Aeropuerto aeropuertoBase;
-   private List<Aeropuerto> listaAeropuertoNobase=new ArrayList<>();
+   private List<Aeropuerto> listaAeropuertosNoBase=new ArrayList<>();
     public PantallaPrincipal() {
         initComponents();
         DefaultComboBoxModel<Aeropuerto> modelo=new DefaultComboBoxModel<Aeropuerto>();
@@ -60,7 +61,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         mnuConsultarVuelo = new javax.swing.JMenuItem();
         mnuVuelosDiarios = new javax.swing.JMenu();
         mnuAltaVueloDiario = new javax.swing.JMenuItem();
-        mnuEliminar = new javax.swing.JMenuItem();
+        mnuEliminarVD = new javax.swing.JMenuItem();
+        mnuModificarVDiario = new javax.swing.JMenuItem();
+        mnuConsultarVDiario = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -160,13 +163,29 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
         mnuVuelosDiarios.add(mnuAltaVueloDiario);
 
-        mnuEliminar.setText("Eliminar");
-        mnuEliminar.addActionListener(new java.awt.event.ActionListener() {
+        mnuEliminarVD.setText("Eliminar");
+        mnuEliminarVD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuEliminarActionPerformed(evt);
+                mnuEliminarVDActionPerformed(evt);
             }
         });
-        mnuVuelosDiarios.add(mnuEliminar);
+        mnuVuelosDiarios.add(mnuEliminarVD);
+
+        mnuModificarVDiario.setText("Modificar");
+        mnuModificarVDiario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuModificarVDiarioActionPerformed(evt);
+            }
+        });
+        mnuVuelosDiarios.add(mnuModificarVDiario);
+
+        mnuConsultarVDiario.setText("Consultar");
+        mnuConsultarVDiario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuConsultarVDiarioActionPerformed(evt);
+            }
+        });
+        mnuVuelosDiarios.add(mnuConsultarVDiario);
 
         jMenuBar1.add(mnuVuelosDiarios);
 
@@ -220,7 +239,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuCrearVueloActionPerformed
 
     private void mnuConsultarVueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuConsultarVueloActionPerformed
-      ConsultarVuelosBase vuelosBase=new ConsultarVuelosBase(this, true);
+      ConsultarVuelosBase vuelosBase=new ConsultarVuelosBase(new JDialog(), true);
       vuelosBase.setVisible(true);
     }//GEN-LAST:event_mnuConsultarVueloActionPerformed
 
@@ -235,16 +254,20 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuEliminarCmpActionPerformed
 
     private void mnuModificarVueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuModificarVueloActionPerformed
-
+        ModificarVueloBase modificarVueloBase=new ModificarVueloBase(this, true);
+        modificarVueloBase.setVisible(true);
+        
     }//GEN-LAST:event_mnuModificarVueloActionPerformed
 
     private void mnuAltaVueloDiarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAltaVueloDiarioActionPerformed
-
+        DarAltaVueloDiario darAltaVueloDiario=new DarAltaVueloDiario(this, true);
+        darAltaVueloDiario.setVisible(true);
     }//GEN-LAST:event_mnuAltaVueloDiarioActionPerformed
 
-    private void mnuEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEliminarActionPerformed
-
-    }//GEN-LAST:event_mnuEliminarActionPerformed
+    private void mnuEliminarVDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEliminarVDActionPerformed
+        DarBajaVueloDiario darBajaVueloDiario=new DarBajaVueloDiario(this, true);
+        darBajaVueloDiario.setVisible(true);
+    }//GEN-LAST:event_mnuEliminarVDActionPerformed
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
        //recupero el aeropuerto seleccionado
@@ -254,7 +277,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 "AEROPUERTO BASE", JOptionPane.YES_NO_OPTION);
         if (opcion==0){
             LogicaNegocio.setAeropuertoBase(aeropuertoBase);
-            listaAeropuertoNobase=LogicaNegocio.getListaAeropuetosBis();
+            listaAeropuertosNoBase=LogicaNegocio.getListaAeropuetosBis();
             comboBoxAeropuertos.setVisible(false);
             comboBoxAeropuertos.setEditable(false);
             btnSeleccionar.setVisible(false);
@@ -262,15 +285,30 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             mnuCompania.setEnabled(true);
             mnuVuelosBase.setEnabled(true);
             mnuVuelosDiarios.setEnabled(true);
+            LogicaNegocio.rellenarListaActualVuelosBase();//rellenamos la lista de vuelos cuyos vuelos que contengan nuestro aeropuerto base
+            LogicaNegocio.referenciarVuelosDiarioVueloBase();//una vez se tienen los vuelo base se les asocia sus vuelo diarios corresponsientes
+            LogicaNegocio.rellenarListaActualVuelosDiarios();
+            
         }
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         System.out.println("Lista final compañias:"+LogicaNegocio.getListaCompaniasAereas().size());
-        System.out.println("Lista final vuelos base:"+LogicaNegocio.getListaVueloBase().size());
-        System.out.println("Lista final vuelos diarios:"+LogicaNegocio.getListaVuelosDIarios().size());
+        System.out.println("Lista final vuelos base:"+LogicaNegocio.getListaVueloBaseCompleta().size());
+        System.out.println("Lista final vuelos diarios:"+LogicaNegocio.getListaVuelosDIariosCompleta().size());
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
+
+    private void mnuConsultarVDiarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuConsultarVDiarioActionPerformed
+        ConsultarVuelosDiarios consultarVuelosDiarios=new ConsultarVuelosDiarios(new JDialog(), true);
+        consultarVuelosDiarios.setVisible(true);
+    }//GEN-LAST:event_mnuConsultarVDiarioActionPerformed
+
+    private void mnuModificarVDiarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuModificarVDiarioActionPerformed
+       ModificarVueloDiario modificarVueloDiario=new ModificarVueloDiario(this, true);
+       modificarVueloDiario.setVisible(true);
+// TODO add your handling code here:
+    }//GEN-LAST:event_mnuModificarVDiarioActionPerformed
 
    
 
@@ -281,13 +319,15 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuAltaVueloDiario;
     private javax.swing.JMenu mnuCompania;
     private javax.swing.JMenuItem mnuConsultarCmp;
+    private javax.swing.JMenuItem mnuConsultarVDiario;
     private javax.swing.JMenuItem mnuConsultarVuelo;
     private javax.swing.JMenuItem mnuCrearCmp;
     private javax.swing.JMenuItem mnuCrearVuelo;
-    private javax.swing.JMenuItem mnuEliminar;
     private javax.swing.JMenuItem mnuEliminarCmp;
+    private javax.swing.JMenuItem mnuEliminarVD;
     private javax.swing.JMenuItem mnuEliminarVuelo;
     private javax.swing.JMenuItem mnuModificarCmp;
+    private javax.swing.JMenuItem mnuModificarVDiario;
     private javax.swing.JMenuItem mnuModificarVuelo;
     private javax.swing.JMenu mnuVuelosBase;
     private javax.swing.JMenu mnuVuelosDiarios;

@@ -126,7 +126,11 @@ public class VueloBase {
     public boolean equals(Object obj) {
         VueloBase vuelo=(VueloBase)obj;
         return this.getCodigo().equals(vuelo.getCodigo());   
-       
+    }
+
+    @Override
+    public String toString() {
+        return codigo;
     }
     
 }  

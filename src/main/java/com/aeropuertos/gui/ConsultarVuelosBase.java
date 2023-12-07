@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 public class ConsultarVuelosBase extends javax.swing.JDialog {
 
    
-    public ConsultarVuelosBase(java.awt.Frame parent, boolean modal) {
+    public ConsultarVuelosBase(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         String[] columnames={"Codigo","Aeropuerto Origen","Aeropuerto Destino","Hora Salida","Hora Llegada","Plazas","D Opera"};

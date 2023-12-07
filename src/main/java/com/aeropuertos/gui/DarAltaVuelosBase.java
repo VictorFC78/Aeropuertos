@@ -12,7 +12,6 @@ import com.aeropuertos.logica.ValidadorDatos;
 import java.time.LocalTime;
 import java.util.Date;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;

@@ -77,8 +77,7 @@ public class VueloDiario {
     public boolean equals(Object obj) {
         VueloDiario vueloD=(VueloDiario)obj;
         if(this.getFechaVuelo().equals(vueloD.getFechaVuelo())
-                & this.getHoraSlida().equals(vueloD.getHoraSlida())
-                & this.getHoraLlegada().equals(vueloD.getHoraLlegada()))return true;
+                & this.getCodigo().equals(vueloD.codigo))return true;
         return false;
     }
     

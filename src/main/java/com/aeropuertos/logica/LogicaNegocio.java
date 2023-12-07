@@ -8,7 +8,9 @@ import com.aeropuertos.dto.Aeropuerto;
 import com.aeropuertos.dto.CompaniaAerea;
 import com.aeropuertos.dto.VueloBase;
 import com.aeropuertos.dto.VueloDiario;
+import com.aeropuertos.persistencia.Persistencia;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,10 +28,23 @@ public class LogicaNegocio {
     private static List<Aeropuerto> listAeropuertosBis=new ArrayList<>();
     private static Aeropuerto aeropuertoOrigen;//aeropuerto de origen
     private static List<CompaniaAerea> listaCompaniaAerea=new ArrayList<>();
-    private static List<VueloBase> listaVueloBase=new ArrayList<>();
-    private static List<VueloDiario> listasVueloDiarioCsv=new ArrayList<>();
+    private static List<VueloBase> listaVuelosBaseCompleta=new ArrayList<>();
+    private static List<VueloBase> listaActualVuelosBase=new ArrayList<>();
+    private static List<VueloDiario> listaVuelosDiariosCompleta=new ArrayList<>();
      private static SimpleDateFormat formatoFecha=new SimpleDateFormat("dd/MM/yyyy");
-   // private static List<VueloDiario> listasVueloDiarioMemoria=new ArrayList<>();
+     private static SimpleDateFormat formatoHora=new SimpleDateFormat("HH:mm");
+    private static List<VueloDiario> listaActualVuelosDiarios=new ArrayList<>();
+    
+    
+    public static void inicializarSistema(){
+        Persistencia.leerListaAeropuertosCsv();//cargar la lista de aeropuerto en el sistema
+        Persistencia.leerCompaniaAereasCsv();//cargamos en memoria la lista de companias
+        Persistencia.leerListaVuelosBaseCsv();//cargamos todo los vuelos base exixtente
+        Persistencia.leerListaVuelosDiariosCsv();//cargamos todo los vuelos diarios en memoria
+        //la asigancion de aeropuerto base, vuelos base y vuelos diarios se realiz cuando se agina el aeropuerto base
+    }
+    
+    
     /******************************* Aeropuertos ***************************************/
     //recuperar aeropuerto por codigo iara
     public static Aeropuerto getAeropuertoSeleccionado(String iata){
@@ -38,7 +53,7 @@ public class LogicaNegocio {
         }
         return null;
     }
-    //
+    //establece el aeropuerto base de la aplicacion
     public static void setAeropuertoBase(Aeropuerto aeropuerto){
         aeropuertoOrigen=aeropuerto;
     }
@@ -50,7 +65,7 @@ public class LogicaNegocio {
     public static void anaidirAeropuertoPersintencia(Aeropuerto aeropuerto){
         listaAeropuertos.add(aeropuerto);
     }
-    //lista de areopueros sin el aeropuerto de origen
+    //lista de todos los aeropuertos excluyendo dse la lista el aeropuerto base
     public static List<Aeropuerto> getListaAeropuetosBis(){
         for (Aeropuerto a:listaAeropuertos){
             if (!a.getIata().equals(aeropuertoOrigen.getIata()))listAeropuertosBis.add(a);
@@ -83,18 +98,21 @@ public class LogicaNegocio {
     }
     //eliminar una compania por codigo
     public static boolean eliminarCompaniaAerea(String codigo){
-        int pos=buscarVuelobaseCodigo(codigo);
-        eliminarVueloBase(listaVueloBase.get(pos).getCodigo());
+        //recupera la lista de vuelos base pertenecientes a una compañia
+        List<VueloBase>lista=buscarVuelosBaseCodigoCompania(codigo);
+        //eliminamos los vuelo base de la lista completa y los eliminamos de la lista actula
+        for (VueloBase v:lista){
+           
+        }  
+        for (VueloBase v:lista){
+            eliminarVueloBase(v.getCodigo());
+        }  
         Iterator<CompaniaAerea> it=listaCompaniaAerea.iterator();
         while(it.hasNext()){
             if(it.next().getCodigo().equals(codigo)){
                 it.remove();
                 return true;
-            }
-            
-            
-            
-            
+            }    
         }
        return false; 
     }
@@ -143,170 +161,236 @@ public class LogicaNegocio {
     /************************** Vuelos Base********************************************/
     //añadir un vuelo a la lista de vuelos base
     public static void  anaidirVueloBasePersistencia(VueloBase vuelo){
-        listaVueloBase.add(vuelo);
+        listaVuelosBaseCompleta.add(vuelo);
     }
     //anñade vuelo base a la lista desde l GUI si no existe coincidencia en la,lista
     public static boolean anaidirVueloBaseGUI(VueloBase vuelo){
-        for (VueloBase v:listaVueloBase){
+        for (VueloBase v:listaVuelosBaseCompleta){//comprueba que no exista un vuelo identico
             if (v.equals(vuelo))return false;
         }
-        listaVueloBase.add(vuelo);
+        listaActualVuelosBase.add(vuelo);//lo añade al la lista actual de trabajo
+        listaVuelosBaseCompleta.add(vuelo);//lo añade a la lista total 
         return true;
     }
+    //rellenar lista actual con los vuelos base que contengan al aeropuerto base
+    public static void rellenarListaActualVuelosBase(){
+        for(VueloBase v:listaVuelosBaseCompleta){
+            if(v.getOrigen().equals(aeropuertoOrigen) || v.getDestino().equals(aeropuertoOrigen)){
+                listaActualVuelosBase.add(v);
+            }
+        }
+    }
+    
+    //recupera la lista con vuelos base que contenga el aeropuerto base entre los de destino u origen
+    public static List<VueloBase> getListaActualVuelosBase(){
+        return listaActualVuelosBase;
+    }
     //recupera la lista de vuelos base 
-    public static List<VueloBase> getListaVueloBase(){
-        return listaVueloBase;
+    public static List<VueloBase> getListaVueloBaseCompleta(){
+        return listaVuelosBaseCompleta;
     }
     //recupera un vuelo por su codigo
-    public static VueloBase getVueloBase(String codigo){
-        for (VueloBase v:listaVueloBase){
+    public static VueloBase getVueloBaseListaompleta(String codigo){
+        for (VueloBase v:listaVuelosBaseCompleta){
+            if (v.getCodigo().equals(codigo)) return v;
+        }
+        return null;
+    }
+     //recupera un vuelo por su codigo
+    public static VueloBase getVueloBaseListaActual(String codigo){
+        for (VueloBase v:listaActualVuelosBase){
             if (v.getCodigo().equals(codigo)) return v;
         }
         return null;
     }
     //recupera un vuelo base por posicion
     public static VueloBase getVueloBase(int pos){
-        return listaVueloBase.get(pos);
+        return listaActualVuelosBase.get(pos);
     }
      //elimina un vuelo segun su codigo segun su codigo
-    public static boolean eliminarVueloBase(String codigo){
-        //eliminamos sus vuelos diarios de la lista total
-        eliminarVueloDiarioLista(codigo);
-        Iterator<VueloBase> it=listaVueloBase.iterator();
+    public static void eliminarVueloBase(String codigo){
+        //elimina todos los vuelos diarios asociados en la lista completa
+      
+        Iterator<VueloDiario>it = listaVuelosDiariosCompleta.iterator();
         while(it.hasNext()){
-            if(it.next().getCodigo().equals(codigo)) {
-                it.remove();
-                return true;
-            }
+            if(it.next().getCodigo().equals(codigo)) it.remove();
         }
-        return false;
+        listaActualVuelosDiarios.clear();
+        //elimino el vuelo base de la lista completa de vuelos base
+        Iterator<VueloBase> itvb=listaVuelosBaseCompleta.iterator();
+        while(itvb.hasNext()){
+            if(itvb.next().getCodigo().equals(codigo)) itvb.remove();
+        }
+        //eliminamos el vuelo base de la lista actual y vaciamos lalista actual de vuelos diarios y la refrescamos
+        itvb=listaActualVuelosBase.iterator();
+        while(itvb.hasNext()){
+            if(itvb.next().getCodigo().equals(codigo)) itvb.remove();
+        }
+       rellenarListaActualVuelosDiarios();
     }
-    //modificar dato de vuelo menos el codigo de vuelo
-    public static void modificarVueloBase(String codigo,Aeropuerto origen,Aeropuerto destino,
-            LocalTime hSalida,LocalTime hllegada,String diasOpera,int plazas){
-       int prefijo=0;
-        for (int i=0;i<listaVueloBase.size();i++){
-            if (listaVueloBase.get(i).getCodigo().equals(codigo))prefijo=i;
-        }
-        listaVueloBase.get(prefijo).setDestino(destino);
-        listaVueloBase.get(prefijo).setOrigen(origen);
-        listaVueloBase.get(prefijo).setHoraSalida(hSalida);
-        listaVueloBase.get(prefijo).setHoraLlegada(hllegada);
-        listaVueloBase.get(prefijo).setDiasOpera(diasOpera);
-        listaVueloBase.get(prefijo).setPlazas(plazas);
+    
+    //modificar dato de vuelo menos el codcigo de vuelo
+    public static boolean modificarVueloBase(VueloBase original,VueloBase datosNuevos){
+       for (VueloBase v:listaVuelosBaseCompleta){//se comprueba si hay coincidencia en la lista actual
+           if(v.equals(datosNuevos)) return false;
+       }
+       //se modifica el vuelo en la lista actual con lo que hay que aactualizarlos en la lista completa
+       original.setCodigo(datosNuevos.getCodigo());
+       original.setOrigen(datosNuevos.getOrigen()); 
+       original.setDestino(datosNuevos.getDestino());
+       original.setPlazas(datosNuevos.getPlazas());
+       original.setHoraSalida(datosNuevos.getHoraSalida());
+       original.setHoraLlegada(datosNuevos.getHoraLlegada());
+       original.setDiasOpera(datosNuevos.getDiasOpera());
+       //se busca el vuelo en la lista completa y se realiza los cambion
+        VueloBase vueloBaselc=getVueloBaseListaompleta(original.getCodigo());
+        modificarVueloBase(vueloBaselc, datosNuevos);
+       return true; 
+      
     }
     //retorna una matriz de object con los datos de los vuelos base
     public static Object[][] datosVueloBase(){
-        Object[][]datos=new Object[listaVueloBase.size()][7];
-        for (int i=0;i<listaVueloBase.size();i++){
-            datos[i][0]=listaVueloBase.get(i).getCodigo();
-            datos[i][1]=listaVueloBase.get(i).getOrigen();
-            datos[i][2]=listaVueloBase.get(i).getDestino();
-            datos[i][3]=listaVueloBase.get(i).getHoraSalida();
-            datos[i][4]=listaVueloBase.get(i).getHoraLlegada();
-            datos[i][5]=listaVueloBase.get(i).getPlazas();
-            datos[i][6]=listaVueloBase.get(i).getDiasOpera();
+        Object[][]datos=new Object[listaActualVuelosBase.size()][7];
+        for (int i=0;i<listaActualVuelosBase.size();i++){
+            datos[i][0]=listaActualVuelosBase.get(i).getCodigo();
+            datos[i][1]=listaActualVuelosBase.get(i).getOrigen();
+            datos[i][2]=listaActualVuelosBase.get(i).getDestino();
+            datos[i][3]=listaActualVuelosBase.get(i).getHoraSalida();
+            datos[i][4]=listaActualVuelosBase.get(i).getHoraLlegada();
+            datos[i][5]=listaActualVuelosBase.get(i).getPlazas();
+            datos[i][6]=listaActualVuelosBase.get(i).getDiasOpera();
         }
         return datos;
     }
-    //busca un vuelo base por codigo y devuelve su posicion en la lista y -1 sino existe
-    private static int buscarVuelobaseCodigo(String codigo){
-        for (int i=0;i<listaVueloBase.size();i++){
-            if (listaVueloBase.get(i).getCodigo().equals(codigo)
-                    ||listaVueloBase.get(i).getCodigo().contains(codigo)) return i;
-        }
-        return -1;
+    //busca los vuelos base que contenga en su codigo las iniciales del codigo de una compañia
+    private static List<VueloBase> buscarVuelosBaseCodigoCompania(String codigo){
+        //los codigo de vuelo contienen las dos iniciales de la compania  a la que pertenecen
+        List<VueloBase> lista=new ArrayList<>();
+       for(VueloBase v:listaActualVuelosBase){
+           if(v.getCodigo().contains(codigo)){
+               lista.add(v);
+           }
+       }
+       return lista;
     }
     /**************************************************************************************/
     
     /************************** Vuelos Diarios********************************************/
     //añadir un vuelo diario a la lista
-    public static void anaidirVueloDiarioLista(VueloDiario vuelo){
-        listasVueloDiarioCsv.add(vuelo);
+    public static void anaidirVueloDiarioListaPersistencia(VueloDiario vuelo){
+        listaVuelosDiariosCompleta.add(vuelo);
     }
     //anade un vuelo diario a su vuelo base mediante el codigo del vuelo base
-    public static void anaidirVueloDiarioVueloBase(VueloDiario vuelo){
-        int pos=0;
-        if ((pos=buscarVuelobaseCodigo(vuelo.getCodigo()))!=-1){
-            listaVueloBase.get(pos).anaidirVueloDiario(vuelo);
-            listasVueloDiarioCsv.add(vuelo);
-        }
+    public static boolean  anaidirVueloDiarioVueloBase(VueloBase vueloBase,VueloDiario vueloDiario){
+      //buscamos que en la lista del vuelo diarios no existe ya un vuelo diario con la misma fecha
+      for(VueloDiario vd:vueloBase.getVuelosDiario()){
+          if (vd.equals(vueloDiario)) return false;
+      }
+        vueloBase.anaidirVueloDiario(vueloDiario);//lo añade a la lista del propio velo base
+        listaVuelosDiariosCompleta.add(vueloDiario);//lo añade a lista completa
+        listaActualVuelosDiarios.add(vueloDiario);//lo añade a la lista actual de vuelos diarios
+        return true;
     }
-    //recuperra la lista de vuelos diarios
-    public static List<VueloDiario> getListaVuelosDIarios(){
-        return listasVueloDiarioCsv;
+    //rellena la lista actual de vuelo diarios que depende del aeropuerto que se haya escohgido como vuelo base
+    public static void rellenarListaActualVuelosDiarios(){
+        for (VueloBase v:listaActualVuelosBase){
+            for(int i=0;i<v.getVuelosDiario().size();i++){
+                listaActualVuelosDiarios.add(v.getVuelosDiario().get(i));
+            }
+        }
     }
     
-    //recupear un vuelo diario  por su fecha en vuelo base 
-    public static VueloDiario getVueloDiario(String codigo,Date fecha){
-       List<VueloDiario> lista=null;
-        for (VueloBase v:listaVueloBase){
-            if(v.getCodigo().equals(codigo)) lista=v.getVuelosDiario();
+    //recuperra la lista de vuelos diarios
+    public static List<VueloDiario> getListaVuelosDIariosCompleta(){
+        return listaVuelosDiariosCompleta;
+    }
+    //recupera un vuelo diario segun la posicion en la lista
+    public static VueloDiario getVueloDiarioistaActual(int pos){
+        return listaActualVuelosDiarios.get(pos);
+    }
+    private static VueloDiario getVueloDiarioListaCompleta(String codigo){
+        for (VueloDiario v:listaVuelosDiariosCompleta){
+            if (v.getCodigo().equals(codigo)) return v;
         }
-        if(lista!=null){
-            for (VueloDiario vd:lista){
-                if (vd.getFechaVuelo().equals(fecha)){
-                    return vd;
-                }
+        return null;
+    }
+    //eliminar vuelo diarios de un vuelo base 
+    public static boolean eliminarVueloDiarioVueloBase(VueloDiario vueloDiario){
+        //buscar el vuelo base mediante el codigo del vuelo diario
+        for (VueloBase v:listaActualVuelosBase){
+            if(v.getCodigo().equals(vueloDiario.getCodigo())){
+               v.getVuelosDiario().remove(vueloDiario);
             }
         }
-       return null;
-    }
-    //eliminar vuelo diarios de un vuelo base  mediante el codigo de vuelo base y la fecha vuelo diario
-    public static boolean eliminarVueloDiarioVueloBase(String codigo,Date fecha){
-        int pos=0;
-        if((pos=buscarVuelobaseCodigo(codigo))!=-1){
-            listaVueloBase.get(pos).eliminarVueloDiario(fecha);
-            eliminarVueloDiarioLista(codigo,fecha);
-            return true;
-        }
-        return false; 
-    }
-    //elimina vuelos diarios de la lista general segun su codigo
-    private static void eliminarVueloDiarioLista(String codigo){
-        Iterator<VueloDiario> it=listasVueloDiarioCsv.iterator();
-        while(it.hasNext()){
-            if(it.next().getCodigo().equals(codigo)) it.remove();
-        }
-    }
-    //elimina vuelos diarios de la lista general segun su codigo y fecha
-    private static void eliminarVueloDiarioLista(String codigo,Date fecha){
-        Iterator<VueloDiario> it=listasVueloDiarioCsv.iterator();
-        while(it.hasNext()){
-            VueloDiario temp=it.next();
-            if(temp.getCodigo().equals(codigo)& temp.getFechaVuelo().equals(fecha)){
-                it.remove();
+        for (VueloBase vb:listaVuelosBaseCompleta){
+            if(vb.getCodigo().equals(vueloDiario.getCodigo())){
+               vb.getVuelosDiario().remove(vueloDiario);
+               listaActualVuelosDiarios.remove(vueloDiario);
+               listaVuelosDiariosCompleta.remove(vueloDiario);
+                return true;
             }
         }
+        return false;
     }
-    //aoscia cada uno de los vuelo diarios a los vuelos base
+
+    //aoscia cada uno de los vuelo diarios a los vuelos base de los vuelos que contengan el aeropuerto base
     public static void referenciarVuelosDiarioVueloBase(){
-        //iteramos en la lista de vuelos diarios buscando que vuelo base contienen el mismo codigo para añadirselo
-        for (VueloDiario v:listasVueloDiarioCsv){
-            VueloBase vb=getVueloBase(v.getCodigo());//recupera el vuelo seguncodifo, codigo vuelo y codigo vuelo diario es el mismo
-            vb.anaidirVueloDiario(v);//le añade el vuelo diario al vuelo base
+        for (VueloBase vb:listaVuelosBaseCompleta){
+            String codigo=vb.getCodigo();
+            for (VueloDiario vd:listaVuelosDiariosCompleta){
+                if (vd.getCodigo().equals(codigo))vb.getVuelosDiario().add(vd);
+            }
         }
     } 
 
     //retorna una matriz de object con los datos de los vuelos diarios
     public static Object[][] extraerDatosVuelosDiarios(){
-        Object[][] datos=new Object[listasVueloDiarioCsv.size()][6];
-        for (int i=0;i<listasVueloDiarioCsv.size();i++){
-            datos[i][0]=listasVueloDiarioCsv.get(i).getCodigo();
-            datos[i][1]=formatoFecha.format( listasVueloDiarioCsv.get(i).getFechaVuelo());
-            datos[i][2]=listasVueloDiarioCsv.get(i).getHoraSlida();
-            datos[i][3]=listasVueloDiarioCsv.get(i).getHoraLlegada();
-            datos[i][4]=listasVueloDiarioCsv.get(i).getPlazasOcupadas();
-            datos[i][5]=listasVueloDiarioCsv.get(i).getPrecio();
+        Object[][] datos=new Object[listaActualVuelosDiarios.size()][6];
+        for (int i=0;i<listaActualVuelosDiarios.size();i++){
+            datos[i][0]=listaActualVuelosDiarios.get(i).getCodigo();
+            datos[i][1]=formatoFecha.format(listaActualVuelosDiarios.get(i).getFechaVuelo());
+            datos[i][2]=listaActualVuelosDiarios.get(i).getHoraSlida();
+            datos[i][3]=listaActualVuelosDiarios.get(i).getHoraLlegada();
+            datos[i][4]=listaActualVuelosDiarios.get(i).getPlazasOcupadas();
+            datos[i][5]=listaActualVuelosDiarios.get(i).getPrecio();
         }
         return datos;
+    }
+    //comprueba si un vuelo diario esta disponible para modificar datos
+    public static boolean vueloDiarioAptoModificaciones(VueloDiario vueloDiario){
+        //recuperamos la fecha  y hora del sistema y la fecha y hora de salida del vuelo y las comparamos
+        int valorFecha=ValidadorDatos.fechaCorrectaCreacionVuelos(vueloDiario.getFechaVuelo());
+        if (valorFecha!=-1){//la fecha del vuelo igual al del sistema o posterior 
+            //se comprueba que la hora del sistema sea menor que la 
+            LocalTime horaActual=LocalTime.now();//hora actual del sistema
+            String horaActualString=formatoHora.format(horaActual);//la hora actual en formato HH:mm
+            LocalTime horaActualFinal=LocalTime.parse(horaActualString);//localtime de hora actual formato HH:mm
+            int valorHora=vueloDiario.getHoraSlida().compareTo(horaActualFinal);
+            if (valorHora>0)return true;
+            return false;   
+        }
+        return false;
+    }
+    public static boolean modificarVueloDiario(VueloDiario original,VueloDiario nuevo){
+        //se comprueba que no existe ningun vuelo asociado en lalista
+        for(VueloDiario v:listaVuelosDiariosCompleta){
+            if(v.equals(nuevo))return false;
+        }
+        original.setFechaVuelo(nuevo.getFechaVuelo());
+        original.setHoraSlida(nuevo.getHoraSlida());
+        original.setHoraLlegada(nuevo.getHoraLlegada());
+        original.setPlazasOcupadas(nuevo.getPlazasOcupadas());
+        original.setPrecio(nuevo.getPrecio());
+        VueloDiario vd=getVueloDiarioListaCompleta(original.getCodigo());//vuelo en la lista completa
+        modificarVueloDiario(vd, nuevo);
+        return true;
     }
 }
 /*
 Proceso de carga en memoria:
 1. Se cargan los aeropuertos
 2. se eligen el aeropuerto de origen y se carga la lista de aeroouertos destinos
-3. Se cargan los vuelos base en memoria
+3. Se cargan los vuelos base en memoria que tengan dentro de su arpto origen y detino el vuelo base elegido
 4. Se asigna a cada vuelo base sus vuelos diarios
 5. Cuando se añade un vuelo diario se añade a la original y a su vuelo base
 6. Cuando se elimina un vuelo base hay que eliminar sus vuelos diario de la lista total de vyuelos diarios

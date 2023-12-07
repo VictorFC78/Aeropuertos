@@ -16,15 +16,17 @@ public class ConsultarVuelosDiarios extends javax.swing.JDialog {
     /**
      * Creates new form ConsultarVuelosDiarios
      */
-    public ConsultarVuelosDiarios(java.awt.Frame parent, boolean modal) {
+    public ConsultarVuelosDiarios(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        refrescarDatos();
+    }
+    public void refrescarDatos(){
         String[] columnames={"Codigo","Fecha","H.Salida","H.Llegada","Plazas Ocupadas","Precio"};
         Object[][]datos=LogicaNegocio.extraerDatosVuelosDiarios();
         DefaultTableModel modelo=new DefaultTableModel(datos, columnames);
         jTable1.setModel(modelo);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

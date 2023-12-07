@@ -99,8 +99,16 @@ public class ValidadorDatos {
             return false;
         }
     }
+    //comprueba que el vuelo que se va a crear tiene un fecha igual o superior al dia de creacion
+    public static int fechaCorrectaCreacionVuelos(Date fecha){
+        SimpleDateFormat formato=new SimpleDateFormat("yyyy-MM-dd");//formato de fecha para el Date 
+        String fechaVueloString=formato.format(fecha);//extrae del date la fecha en el formato deseado
+        LocalDate fechaVuelo=LocalDate.parse(fechaVueloString);
+        LocalDate fechaActual=LocalDate.now();//creamos una instancia del dia actual
+        return fechaVuelo.compareTo(fechaActual);
+    }
     //comorueba si la fecha introducida coincide con dias de la semana que opera el vuelo
-    public static boolean validacionFechaVuelo(Date fechaVuelo,VueloBase v){
+    public static boolean coincidenciaFechaDiasOpera(Date fechaVuelo,VueloBase v){
         SimpleDateFormat sformato=new SimpleDateFormat("dd/MM/yyyy");
         DateTimeFormatter dformato=DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fechaVueloString=sformato.format(fechaVuelo);//obtien la fecha vuelo en String

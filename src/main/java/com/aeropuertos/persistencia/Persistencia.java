@@ -227,7 +227,7 @@ public class Persistencia {
         //borrar el ficehro para garbar todos los datos
        if(VUELOS_BASE.exists())VUELOS_BASE.delete();
         //comprueba que la lista no esta 
-        List<VueloBase> listaVB=LogicaNegocio.getListaVueloBase();
+        List<VueloBase> listaVB=LogicaNegocio.getListaVueloBaseCompleta();
         if (!listaVB.isEmpty()){
             ArrayList<String> temp=new ArrayList<>();
                 //recorremos la lista de vuelos extraemos los aeropuertos loe escribimos y despues escribimos los de mas atributos
@@ -273,7 +273,7 @@ public class Persistencia {
         
         if(VUELOS_DIARIOS.exists()& VUELOS_DIARIOS.length()!=0){
          // recupera los datos del csv en una lista de string el numero de lineas total, cada linea va a ocupar 6 datos 
-         DocumentoCsv csv=new DocumentoCsv();
+         DocumentoCsv csv;
          ApiCsv apiCsv=new ApiCsv();
          csv=apiCsv.leerCSV(VUELOS_DIARIOS);
             return csv;
@@ -299,7 +299,7 @@ public class Persistencia {
                  VueloDiario vueloD=new VueloDiario(temp.get(0), parseStrinDate(temp.get(1)),
                          parseStringLocalTime(temp.get(2)),parseStringLocalTime(temp.get(3))
                          ,Integer.parseInt(temp.get(4)),Double.parseDouble( temp.get(5)));
-                 LogicaNegocio.anaidirVueloDiarioLista(vueloD);
+                 LogicaNegocio.anaidirVueloDiarioListaPersistencia(vueloD);
                  j=0;
                  temp.clear();
                 }
@@ -309,9 +309,9 @@ public class Persistencia {
      //escribe los vuelos diarios en memoria al archivo csv
     public static void escribirVuelosDiariosCsv() {
         //extraer todos lod datos de la lista en memoria, crea una lista de strings y el numero total de linea 
-        if(!LogicaNegocio.getListaVuelosDIarios().isEmpty()){
+        if(!LogicaNegocio.getListaVuelosDIariosCompleta().isEmpty()){
             //recorremos la lista para extaer los vuelos diarios y sus datos
-            List<VueloDiario> lista=LogicaNegocio.getListaVuelosDIarios();
+            List<VueloDiario> lista=LogicaNegocio.getListaVuelosDIariosCompleta();
             ArrayList<String> datos=new ArrayList<>();
             for (int i=0;i<lista.size();i++){
                 String[] temp=extarerDatosListaVuelosDiarios(lista.get(i));//extrae datos de cada vuelo

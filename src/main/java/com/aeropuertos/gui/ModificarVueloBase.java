@@ -6,8 +6,6 @@ package com.aeropuertos.gui;
 
 import com.aeropuertos.dto.VueloBase;
 import com.aeropuertos.logica.LogicaNegocio;
-import com.aeropuertos.persistencia.Persistencia;
-import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,25 +13,38 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author 34675
  */
-public class DarBajaVueloBase extends javax.swing.JDialog {
+public class ModificarVueloBase extends javax.swing.JDialog {
 
-   private int filaseleccionada;
-    public DarBajaVueloBase(java.awt.Frame parent, boolean modal) {
+    /**
+     * Creates new form ModificarVueloBase
+     */
+    private int filaSeleccionada;
+    private VueloBase vueloBase;
+    public ModificarVueloBase(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        filaseleccionada=-1;
-       refrescatTabla();
-
+        refrescatTabla();
     }
-    private  void refrescatTabla(){
+    protected void refrescatTabla(){
         String[] columnames = {"Codigo", "Aeropuerto Origen", "Aeropuerto Destino", "Hora Salida", "Hora Llegada", "Plazas", "D Opera"};
         DefaultTableModel modelo = new DefaultTableModel(LogicaNegocio.datosVueloBase(), columnames);
         tabla.setModel(modelo);
         lblVueloBase.setVisible(false);
-        filaseleccionada=-1;
- 
+        filaSeleccionada=-1;
     }
-       
+    protected VueloBase getVueloSeleccionado(){
+        return vueloBase;
+    }
+    private boolean establecerDatos(){
+        filaSeleccionada=tabla.getSelectedRow();
+        if (filaSeleccionada!=-1){
+            vueloBase=LogicaNegocio.getVueloBase(filaSeleccionada);
+            lblVueloBase.setText(vueloBase.getCodigo());
+            lblVueloBase.setVisible(true);
+            return true;
+        }
+        return false;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,8 +56,8 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
-        btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         lblVueloBase = new javax.swing.JLabel();
 
@@ -59,17 +70,17 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tabla);
 
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
+            }
+        });
+
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
             }
         });
 
@@ -87,14 +98,14 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblVueloBase)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEliminar)
-                        .addGap(5, 5, 5)
+                        .addComponent(btnModificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSalir)))
                 .addContainerGap())
         );
@@ -102,56 +113,51 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnSalir)
-                    .addComponent(jLabel1)
-                    .addComponent(lblVueloBase))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(lblVueloBase))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnSalir)
+                        .addComponent(btnModificar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        filaseleccionada=tabla.getSelectedRow();
-        if(filaseleccionada!=-1){
-            VueloBase vuelo=LogicaNegocio.getVueloBase(filaseleccionada);
-           int opcion=JOptionPane.showConfirmDialog(this,"Va a eliminar el vuelo "+vuelo.getCodigo(),"ELIMINAR VUELO BASE", JOptionPane.YES_NO_OPTION);
-           if (opcion==0){
-               LogicaNegocio.eliminarVueloBase(vuelo.getCodigo());
-               refrescatTabla();
-           }
-        }else JOptionPane.showMessageDialog(this, "No hay vuelo sellecionado");
-        
-
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-        filaseleccionada=tabla.getSelectedRow();
-        if(filaseleccionada!=-1){
-            
-        VueloBase vuelo=LogicaNegocio.getVueloBase(filaseleccionada);
-        lblVueloBase.setText(vuelo.getCodigo());
-        lblVueloBase.setVisible(true);
-        }
+        establecerDatos();
         // TODO add your handling code here:
     }//GEN-LAST:event_tablaMouseClicked
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        if (establecerDatos()){
+            if (vueloBase.getVuelosDiario().isEmpty()){
+                ModificarVueloBaseBis modificarVueloBaseBis=new ModificarVueloBaseBis(this, true);
+                modificarVueloBaseBis.setVisible(true);
+            }else{
+               JOptionPane.showMessageDialog(this, "No se puede modificar, tiene vuelos diarios asociados");
+
+            }
+        }
+        else JOptionPane.showMessageDialog(this, "No hay vuelo sellecionado");
+            
+        
+
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

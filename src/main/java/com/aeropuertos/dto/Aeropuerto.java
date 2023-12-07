@@ -57,5 +57,10 @@ public class Aeropuerto {
     public String toString() {
         return  nombre ;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.getIata().equals(((Aeropuerto)obj).getIata());
+    }
     
 }

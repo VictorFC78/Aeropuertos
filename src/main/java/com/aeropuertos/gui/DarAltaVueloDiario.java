@@ -187,8 +187,8 @@ public class DarAltaVueloDiario extends javax.swing.JDialog {
         Date fecha=(Date)spinnerFecha.getValue();//recupara la fecha
         Date dateSalida=(Date)spinnerHSalida.getValue();//recupera hora de salida
         Date dateLlegada=(Date)spinnerHLlegada.getValue();//recupera hora llegada
-        LocalTime horaSalida=ValidadorDatos.parseDateLocalTime(dateSalida);//formatea la hora a localtime HH:mm
-        LocalTime horaLlegada=ValidadorDatos.parseDateLocalTime(dateLlegada);
+        LocalTime horaSalida=ValidadorDatos.parseDateLocalTimeHora(dateSalida);//formatea la hora a localtime HH:mm
+        LocalTime horaLlegada=ValidadorDatos.parseDateLocalTimeHora(dateLlegada);
         String codigo=comboxCodigo.getSelectedItem().toString();
         String precio=txtPrecio.getText();
         int plazas=(Integer)spinnerPlazas.getValue();

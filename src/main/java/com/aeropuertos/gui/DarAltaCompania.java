@@ -1,8 +1,10 @@
 
 package com.aeropuertos.gui;
 import com.aeropuertos.dto.CompaniaAerea;
+import com.aeropuertos.dto.Municipio;
 import com.aeropuertos.logica.LogicaNegocio;
 import com.aeropuertos.logica.ValidadorDatos;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 
@@ -13,15 +15,19 @@ public class DarAltaCompania extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setTitle("DAR ALTA COMPAÑIA NUEVA");
+        DefaultComboBoxModel<Municipio> modelo=new DefaultComboBoxModel<>();
+        modelo.addAll(LogicaNegocio.getListaMunicipios());
+        comboMunicipio.setModel(modelo);
+        comboMunicipio.setSelectedIndex(0);
     }
     private void darAlta(){
        String nombre=TextFieldNombre.getText();
         String direccion=TextFieldDireccion.getText();
-        String municipio=TextFieldMunicipio.getText();
+        String municipio=((Municipio)comboMunicipio.getSelectedItem()).getNombre();
         String tlfPasaj=TextFieldTlfPasaj.getText();
         String tlfAerpto=TextFieldTlfAerpto.getText();
         String codigo=TextFieldCodigo.getText();
-        if(nombre.isEmpty() || direccion.isEmpty()|| municipio.isEmpty() || tlfPasaj.isEmpty()
+        if(nombre.isEmpty() || direccion.isEmpty()|| tlfPasaj.isEmpty()
                 || tlfAerpto.isEmpty()|| codigo.isEmpty()){
             JOptionPane.showMessageDialog(this, "Hay campos en blanco", "CAMPOS COMPAÑIA", JOptionPane.ERROR_MESSAGE);
 
@@ -33,7 +39,6 @@ public class DarAltaCompania extends javax.swing.JDialog {
                    LogicaNegocio.anaidirCompaniaAerea(compania);
                    TextFieldNombre.setText("");
                    TextFieldDireccion.setText("");
-                   TextFieldMunicipio.setText("");
                    TextFieldTlfPasaj.setText("");
                    TextFieldTlfAerpto.setText("");
                    TextFieldCodigo.setText("");
@@ -64,12 +69,12 @@ public class DarAltaCompania extends javax.swing.JDialog {
         TextFieldTlfAerpto = new javax.swing.JTextField();
         TextFieldNombre = new javax.swing.JTextField();
         TextFieldDireccion = new javax.swing.JTextField();
-        TextFieldMunicipio = new javax.swing.JTextField();
         TextFieldTlfPasaj = new javax.swing.JTextField();
         TextFieldCodigo = new javax.swing.JTextField();
         ButtonAceptar = new javax.swing.JButton();
         ButtonCancelar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        comboMunicipio = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -129,10 +134,10 @@ public class DarAltaCompania extends javax.swing.JDialog {
                         .addComponent(ButtonCancelar))
                     .addComponent(TextFieldNombre)
                     .addComponent(TextFieldDireccion)
-                    .addComponent(TextFieldMunicipio)
                     .addComponent(TextFieldTlfPasaj)
                     .addComponent(TextFieldTlfAerpto)
-                    .addComponent(TextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboMunicipio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(TextFieldCodigo))
                 .addGap(37, 37, 37))
             .addGroup(layout.createSequentialGroup()
                 .addGap(155, 155, 155)
@@ -155,7 +160,7 @@ public class DarAltaCompania extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(TextFieldMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -197,10 +202,10 @@ public class DarAltaCompania extends javax.swing.JDialog {
     private javax.swing.JButton ButtonCancelar;
     private javax.swing.JTextField TextFieldCodigo;
     private javax.swing.JTextField TextFieldDireccion;
-    private javax.swing.JTextField TextFieldMunicipio;
     private javax.swing.JTextField TextFieldNombre;
     private javax.swing.JTextField TextFieldTlfAerpto;
     private javax.swing.JTextField TextFieldTlfPasaj;
+    private javax.swing.JComboBox<Municipio> comboMunicipio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

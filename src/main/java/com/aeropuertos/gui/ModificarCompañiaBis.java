@@ -5,8 +5,10 @@
 package com.aeropuertos.gui;
 
 import com.aeropuertos.dto.CompaniaAerea;
+import com.aeropuertos.dto.Municipio;
 import com.aeropuertos.logica.LogicaNegocio;
 import com.aeropuertos.logica.ValidadorDatos;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 
@@ -25,6 +27,10 @@ public class ModificarCompañiaBis extends javax.swing.JDialog {
         dialogoModificar=(ModificarCompaniaAerea)getParent();
         filaSeleccionada=dialogoModificar.getFilaSeleccionada();
         companiaAerea=LogicaNegocio.getCompaniaAerea(filaSeleccionada);
+        DefaultComboBoxModel<Municipio> model=new DefaultComboBoxModel<>();
+        model.addAll(LogicaNegocio.getListaMunicipios());
+        comboMunicipio.setModel(model);
+        comboMunicipio.setSelectedIndex(0);
         backupDatosOriginales();
         refrescarDatos();
     }
@@ -36,7 +42,6 @@ public class ModificarCompañiaBis extends javax.swing.JDialog {
         lblTlfAepto.setText(companiaAerea.getTlfAeropuertos());
         lblTlfPsjro.setText(companiaAerea.getTlfPasajeros());
         txtDireccion.setText(companiaAerea.getDireccion());
-        txtMunicipio.setText(companiaAerea.getMunicipio());
         txtTlfArpto.setText(companiaAerea.getTlfAeropuertos());
         txtTlfPsjro.setText(companiaAerea.getTlfPasajeros());
     }
@@ -77,16 +82,18 @@ public class ModificarCompañiaBis extends javax.swing.JDialog {
         lblTlfAepto = new javax.swing.JLabel();
         lblTlfPsjro = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
-        txtMunicipio = new javax.swing.JTextField();
         txtTlfArpto = new javax.swing.JTextField();
         txtTlfPsjro = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         btnDeshacer = new javax.swing.JButton();
+        comboMunicipio = new javax.swing.JComboBox<>();
 
         jPasswordField1.setText("jPasswordField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(470, 400));
+        setSize(new java.awt.Dimension(470, 400));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("DATOS ACTUALES");
@@ -183,12 +190,12 @@ public class ModificarCompañiaBis extends javax.swing.JDialog {
                         .addComponent(btnCancelar))
                     .addComponent(txtTlfPsjro, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtTlfArpto, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtMunicipio, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addComponent(jLabel2)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addComponent(jLabel2))
+                    .addComponent(comboMunicipio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,7 +221,7 @@ public class ModificarCompañiaBis extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(lblMunicipio)
-                    .addComponent(txtMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -230,7 +237,7 @@ public class ModificarCompañiaBis extends javax.swing.JDialog {
                     .addComponent(btnCancelar)
                     .addComponent(btnAceptar)
                     .addComponent(btnDeshacer))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -238,14 +245,14 @@ public class ModificarCompañiaBis extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String direccionS=txtDireccion.getText();
-        String municipioS=txtMunicipio.getText();
+        String municipioS=((Municipio)comboMunicipio.getSelectedItem()).getNombre();
         String tlfPsjroS=txtTlfPsjro.getText();
         String tlfArptoS=txtTlfArpto.getText();
-        if(direccionS.isEmpty()||municipioS.isEmpty()|| tlfPsjroS.isEmpty()||tlfArptoS.isEmpty()){
+        if(direccionS.isEmpty()||tlfPsjroS.isEmpty()||tlfArptoS.isEmpty()){
             JOptionPane.showMessageDialog(this, "Hay campos en blanco", "CAMPOS COMPAÑIA", JOptionPane.ERROR_MESSAGE);
         }else if(!ValidadorDatos.formatoTelefono(tlfArptoS, this )|| !ValidadorDatos.formatoTelefono(tlfPsjroS, this)){
         }else{
-            System.out.println("cambio datos");
+            
             companiaAerea.setDireccion(direccionS);
             companiaAerea.setMunicipio(municipioS);
             companiaAerea.setTlfPasajeros(tlfPsjroS);
@@ -275,6 +282,7 @@ public class ModificarCompañiaBis extends javax.swing.JDialog {
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnDeshacer;
+    private javax.swing.JComboBox<Municipio> comboMunicipio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -291,7 +299,6 @@ public class ModificarCompañiaBis extends javax.swing.JDialog {
     private javax.swing.JLabel lblTlfAepto;
     private javax.swing.JLabel lblTlfPsjro;
     private javax.swing.JTextField txtDireccion;
-    private javax.swing.JTextField txtMunicipio;
     private javax.swing.JTextField txtTlfArpto;
     private javax.swing.JTextField txtTlfPsjro;
     // End of variables declaration//GEN-END:variables

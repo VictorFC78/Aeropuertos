@@ -23,7 +23,7 @@ public class ConsultarVuelosDiarios extends javax.swing.JDialog {
     }
     public void refrescarDatos(){
         String[] columnames={"Codigo","Fecha","H.Salida","H.Llegada","Plazas Ocupadas","Precio"};
-        Object[][]datos=LogicaNegocio.extraerDatosVuelosDiarios();
+        Object[][]datos=LogicaNegocio.extraerDatosVuelosDiarios(LogicaNegocio.getListaActualVuelosDiarios());
         DefaultTableModel modelo=new DefaultTableModel(datos, columnames);
         jTable1.setModel(modelo);
     }

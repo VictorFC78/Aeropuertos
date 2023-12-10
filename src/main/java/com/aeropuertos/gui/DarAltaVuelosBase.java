@@ -320,8 +320,8 @@ public class DarAltaVuelosBase extends javax.swing.JDialog {
             String codigo=LogicaNegocio.getCompaniaAerea(comboCompania.getSelectedIndex()).getCodigo();
             Aeropuerto origen=(Aeropuerto)comboAOrigen.getSelectedItem();
             Aeropuerto destino=(Aeropuerto)comboADestino.getSelectedItem();
-            LocalTime timeSalida=ValidadorDatos.parseDateLocalTime(hSalida);
-            LocalTime timeLlegada=ValidadorDatos.parseDateLocalTime(hLlegada);
+            LocalTime timeSalida=ValidadorDatos.parseDateLocalTimeHora(hSalida);
+            LocalTime timeLlegada=ValidadorDatos.parseDateLocalTimeHora(hLlegada);
             VueloBase vueloBase=new VueloBase(codigo+nCodigo, origen, destino, plazas,timeSalida , timeLlegada, diasOpera);
             if (LogicaNegocio.anaidirVueloBaseGUI(vueloBase));
             else  JOptionPane.showMessageDialog(this, "El vuelo ya existe", "COINCIDENCIA VUELO BASE", JOptionPane.ERROR_MESSAGE);  

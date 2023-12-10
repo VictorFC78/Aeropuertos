@@ -46,10 +46,10 @@
                   </Group>
                   <Component id="TextFieldNombre" alignment="0" max="32767" attributes="0"/>
                   <Component id="TextFieldDireccion" alignment="0" max="32767" attributes="0"/>
-                  <Component id="TextFieldMunicipio" alignment="0" max="32767" attributes="0"/>
                   <Component id="TextFieldTlfPasaj" alignment="0" max="32767" attributes="0"/>
                   <Component id="TextFieldTlfAerpto" alignment="0" max="32767" attributes="0"/>
-                  <Component id="TextFieldCodigo" alignment="0" min="-2" pref="52" max="-2" attributes="0"/>
+                  <Component id="comboMunicipio" max="32767" attributes="0"/>
+                  <Component id="TextFieldCodigo" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
           </Group>
@@ -78,7 +78,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="TextFieldMunicipio" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="comboMunicipio" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -160,8 +160,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="TextFieldDireccion">
     </Component>
-    <Component class="javax.swing.JTextField" name="TextFieldMunicipio">
-    </Component>
     <Component class="javax.swing.JTextField" name="TextFieldTlfPasaj">
     </Component>
     <Component class="javax.swing.JTextField" name="TextFieldCodigo">
@@ -189,6 +187,11 @@
         </Property>
         <Property name="text" type="java.lang.String" value="ALTA COMPA&#xd1;IA"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboMunicipio">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Municipio&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

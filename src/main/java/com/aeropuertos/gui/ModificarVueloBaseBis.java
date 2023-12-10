@@ -353,15 +353,18 @@ public class ModificarVueloBaseBis extends javax.swing.JDialog {
           JOptionPane.showMessageDialog(this, "Hora de salida menor-igual que hora de llegada", "COINCIDENCIA HORAS", JOptionPane.ERROR_MESSAGE);  
         }else if (!ValidadorDatos.formatoDiasOpera(diasOpera, this)){}
         else {
-            LocalTime horaSalida=ValidadorDatos.parseDateLocalTime(dateSalida);
-            LocalTime horaLlegada=ValidadorDatos.parseDateLocalTime(dateLegada);
+            LocalTime horaSalida=ValidadorDatos.parseDateLocalTimeHora(dateSalida);
+            LocalTime horaLlegada=ValidadorDatos.parseDateLocalTimeHora(dateLegada);
             //modificamos el vuelo si esta todo correcto y si no existe coicidencia con otros vuelos
             StringBuilder codigoCompania=new StringBuilder();
             codigoCompania.append(vueloBase.getCodigo().charAt(0));
             codigoCompania.append(vueloBase.getCodigo().charAt(1));
             String codigo=codigoCompania.toString()+nCodigo;
             VueloBase datosNuevos=new VueloBase(codigo, aeropuertoOrigen, aeropuertoDestino, plazas, horaSalida, horaLlegada, diasOpera);
-            if (LogicaNegocio.modificarVueloBase(vueloBase, datosNuevos)) refrescarDatos();
+            if (LogicaNegocio.modificarVueloBase(vueloBase, datosNuevos)){
+                modificarVueloBase.refrescatTabla();
+                refrescarDatos();
+            }
             else  JOptionPane.showMessageDialog(this, "El vuelo ya existe", "COINCIDENCIA VUELO BASE", JOptionPane.ERROR_MESSAGE);      
         }
 

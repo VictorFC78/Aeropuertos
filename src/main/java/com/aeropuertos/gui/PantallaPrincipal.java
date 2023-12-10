@@ -35,6 +35,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         mnuCompania.setEnabled(false);
         mnuVuelosBase.setEnabled(false);
         mnuVuelosDiarios.setEnabled(false);
+        mnuConsultas.setEnabled(false);
     }
 
     /**
@@ -64,6 +65,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         mnuEliminarVD = new javax.swing.JMenuItem();
         mnuModificarVDiario = new javax.swing.JMenuItem();
         mnuConsultarVDiario = new javax.swing.JMenuItem();
+        mnuConsultas = new javax.swing.JMenu();
+        mnuSalidas = new javax.swing.JMenuItem();
+        mnuLlegada = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -189,6 +193,26 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuVuelosDiarios);
 
+        mnuConsultas.setText("Consultas");
+
+        mnuSalidas.setText("Vuelos de Salida");
+        mnuSalidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSalidasActionPerformed(evt);
+            }
+        });
+        mnuConsultas.add(mnuSalidas);
+
+        mnuLlegada.setText("Vuelos de Llegada");
+        mnuLlegada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuLlegadaActionPerformed(evt);
+            }
+        });
+        mnuConsultas.add(mnuLlegada);
+
+        jMenuBar1.add(mnuConsultas);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -285,6 +309,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             mnuCompania.setEnabled(true);
             mnuVuelosBase.setEnabled(true);
             mnuVuelosDiarios.setEnabled(true);
+            mnuConsultas.setEnabled(true);
             LogicaNegocio.rellenarListaActualVuelosBase();//rellenamos la lista de vuelos cuyos vuelos que contengan nuestro aeropuerto base
             LogicaNegocio.referenciarVuelosDiarioVueloBase();//una vez se tienen los vuelo base se les asocia sus vuelo diarios corresponsientes
             LogicaNegocio.rellenarListaActualVuelosDiarios();
@@ -310,6 +335,18 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 // TODO add your handling code here:
     }//GEN-LAST:event_mnuModificarVDiarioActionPerformed
 
+    private void mnuSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSalidasActionPerformed
+        PanelSalidas panelSalidas=new PanelSalidas(this, true);
+        panelSalidas.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnuSalidasActionPerformed
+
+    private void mnuLlegadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLlegadaActionPerformed
+        PanelLlegadas panelLlegadas=new PanelLlegadas(this, true);
+        panelLlegadas.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnuLlegadaActionPerformed
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -321,14 +358,17 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuConsultarCmp;
     private javax.swing.JMenuItem mnuConsultarVDiario;
     private javax.swing.JMenuItem mnuConsultarVuelo;
+    private javax.swing.JMenu mnuConsultas;
     private javax.swing.JMenuItem mnuCrearCmp;
     private javax.swing.JMenuItem mnuCrearVuelo;
     private javax.swing.JMenuItem mnuEliminarCmp;
     private javax.swing.JMenuItem mnuEliminarVD;
     private javax.swing.JMenuItem mnuEliminarVuelo;
+    private javax.swing.JMenuItem mnuLlegada;
     private javax.swing.JMenuItem mnuModificarCmp;
     private javax.swing.JMenuItem mnuModificarVDiario;
     private javax.swing.JMenuItem mnuModificarVuelo;
+    private javax.swing.JMenuItem mnuSalidas;
     private javax.swing.JMenu mnuVuelosBase;
     private javax.swing.JMenu mnuVuelosDiarios;
     // End of variables declaration//GEN-END:variables

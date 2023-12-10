@@ -6,6 +6,7 @@ package com.aeropuertos.persistencia;
 
 import com.aeropuertos.dto.Aeropuerto;
 import com.aeropuertos.dto.CompaniaAerea;
+import com.aeropuertos.dto.Municipio;
 import com.aeropuertos.dto.VueloBase;
 import com.aeropuertos.dto.VueloDiario;
 import com.aeropuertos.logica.LogicaNegocio;
@@ -28,24 +29,25 @@ public class Persistencia {
     private static final File COMPANIAS=new File("companias.csv");
     private static final File VUELOS_BASE=new File("Vuelos_base.csv");
     private static final File VUELOS_DIARIOS=new File("Vuelos_Diarios.csv");
+    private static final File MUNICIPIOS=new File("Municipios.csv");
     private static SimpleDateFormat formatoHora=new SimpleDateFormat("HH:mm");
     private static SimpleDateFormat formatoFecha=new SimpleDateFormat("dd/MM/yyyy");
     
     /*******************************Metodos Comunes**************************************/
     //convertir de string a localTime
-   private static LocalTime parseStringLocalTime(String hora){ 
+   public static LocalTime parseStringLocalTime(String hora){ 
        return LocalTime.parse(hora);
    }
    //convertir localtime a srring con formatoHora HH:mm.
-   private static String parseLocalTimeString(LocalTime time){      
+   public static String parseLocalTimeString(LocalTime time){      
       return time.format(DateTimeFormatter.ofPattern("HH:mm"));
    }
    //convertir de string a Date
-   private static Date parseStrinDate(String fecha){
+   public static Date parseStrinDate(String fecha){
        return formatoFecha.parse(fecha,new ParsePosition(0));
    }
    //convertir de Date a String
-   private static String parseDateString(Date fecha){
+   public static String parseDateString(Date fecha){
         return formatoHora.format(fecha);
    }
     /****************************************************************************************/
@@ -70,6 +72,27 @@ public class Persistencia {
        } 
     }   
 }
+    public static void leerMunicipiosCsv(){
+        if(MUNICIPIOS.exists() & MUNICIPIOS.length()!=0){
+            DocumentoCsv csv;
+            ApiCsv apiCsv=new ApiCsv();
+            csv=apiCsv.leerCSV(MUNICIPIOS);
+            ArrayList<String> datosCsv = csv.getDatos();
+            int datosLinea = datosCsv.size() / csv.getNumLineas();
+            ArrayList<String> temp = new ArrayList<>();
+            int indice=0;
+            for (int i = 0; i < datosCsv.size(); i++) {
+                temp.add(datosCsv.get(i));
+                indice++;
+                if (indice == datosLinea) {
+                    Municipio municipio=new Municipio(temp.get(0),Integer.parseInt(temp.get(1)));
+                    LogicaNegocio.anaidirMunicipioLista(municipio);
+                    temp.clear();
+                    indice = 0;
+                }
+            }     
+        }
+    }
    /*****************************C****************************************************************/
     
     /*****************************Compañias*******************************************************/

@@ -27,7 +27,7 @@ public class DarBajaVueloDiario extends javax.swing.JDialog {
     }
     private void refrescarDatos(){
         String[] columnames={"Codigo","Fecha","H.Salida","H.Llegada","Plazas Ocupadas","Precio"};
-        Object[][]datos=LogicaNegocio.extraerDatosVuelosDiarios();
+        Object[][]datos=LogicaNegocio.extraerDatosVuelosDiarios(LogicaNegocio.getListaActualVuelosDiarios());
         DefaultTableModel modelo=new DefaultTableModel(datos, columnames);
         tabla.setModel(modelo);
         lblDatos.setVisible(false);
@@ -133,7 +133,7 @@ public class DarBajaVueloDiario extends javax.swing.JDialog {
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
         filaSeleccionada=tabla.getSelectedRow();
         if(filaSeleccionada!=-1){
-            vueloDiario=LogicaNegocio.getVueloDiarioistaActual(filaSeleccionada);
+            vueloDiario=LogicaNegocio.getVueloDiarioListaActual(filaSeleccionada);
             SimpleDateFormat formato=new SimpleDateFormat("dd/MM/yyyy");
             String fecha=formato.format(vueloDiario.getFechaVuelo());
             

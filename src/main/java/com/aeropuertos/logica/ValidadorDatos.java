@@ -14,6 +14,7 @@ import static java.time.DayOfWeek.THURSDAY;
 import static java.time.DayOfWeek.TUESDAY;
 import static java.time.DayOfWeek.WEDNESDAY;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -109,9 +110,9 @@ public class ValidadorDatos {
     }
     //comorueba si la fecha introducida coincide con dias de la semana que opera el vuelo
     public static boolean coincidenciaFechaDiasOpera(Date fechaVuelo,VueloBase v){
-        SimpleDateFormat sformato=new SimpleDateFormat("dd/MM/yyyy");
+       
         DateTimeFormatter dformato=DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String fechaVueloString=sformato.format(fechaVuelo);//obtien la fecha vuelo en String
+        String fechaVueloString=formatoFecha.format(fechaVuelo);//obtien la fecha vuelo en String
         LocalDate fecha=LocalDate.parse(fechaVueloString, dformato);//retoena una instancia de LocalDate de la fecha de vuelo con nuestrio formato
         DayOfWeek dia=fecha.getDayOfWeek();// retorna el dia de la semanana 
         //recorremos la fecha y comprueba si existe coincidencia en dua de la semanana
@@ -143,16 +144,28 @@ public class ValidadorDatos {
     //compreba que una hora pasada por primer parametro es mayor menor o igual
     public static int compararHoras(Date date1,Date date2){
         //para poder comparar horas tenemos usar la clase LOCALTIME
-        LocalTime localTime1=parseDateLocalTime(date1);//conseguimos un localtime con la hora del date fecha1
-        LocalTime localTime2=parseDateLocalTime(date2);;//conseguimos un localtime con la hora del date fecha1
+        LocalTime localTime1=parseDateLocalTimeHora(date1);//conseguimos un localtime con la hora del date fecha1
+        LocalTime localTime2=parseDateLocalTimeHora(date2);;//conseguimos un localtime con la hora del date fecha1
         return localTime1.compareTo(localTime2);
     }
+    //retorna valor negivo si date1 menor date2 ,0 igual y positivo mayor
+    public static int compararFechas(Date date1,Date date2){
+        LocalDate fecha1=parseDateLocalDateFecha(date1);
+        LocalDate fecha2=parseDateLocalDateFecha(date2);
+        return fecha1.compareTo(fecha2);
+        
+    }
     //parsea un Date a LocatIme
-    public static LocalTime parseDateLocalTime(Date date){
+    public static LocalTime parseDateLocalTimeHora(Date date){
         //para poder comparar horas tenemos usar la clase LOCALTIME
         String dateString=formatoHora.format(date);//string del date con el formato HH:mm
-        LocalTime dateLocalTime=LocalTime.parse(dateString);//conseguimos un localtime con la hora del date fecha1
-        return dateLocalTime;
+        return LocalTime.parse(dateString);//conseguimos un localtime con la hora del date fecha1
+        
+    }
+    public static LocalDate parseDateLocalDateFecha(Date date){
+        String fechaString=formatoFecha.format(date);
+        return LocalDate.parse(fechaString,DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        
     }
     protected static void mostarErrores(String mensaje,String titulo,Component p){    
         JOptionPane.showMessageDialog(p, mensaje,titulo,JOptionPane.ERROR_MESSAGE);

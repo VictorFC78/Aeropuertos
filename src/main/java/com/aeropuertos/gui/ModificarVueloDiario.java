@@ -26,9 +26,9 @@ public class ModificarVueloDiario extends javax.swing.JDialog {
         initComponents();
         refrescarDatos();
     }
-    private  void refrescarDatos(){
+    protected void refrescarDatos(){
         String[] columnames={"Codigo","Fecha","H.Salida","H.Llegada","Plazas Ocupadas","Precio"};
-        Object[][]datos=LogicaNegocio.extraerDatosVuelosDiarios();
+        Object[][]datos=LogicaNegocio.extraerDatosVuelosDiarios(LogicaNegocio.getListaActualVuelosDiarios());
         DefaultTableModel modelo=new DefaultTableModel(datos, columnames);
         tabla.setModel(modelo);
         lblDatos.setVisible(false);
@@ -124,9 +124,10 @@ public class ModificarVueloDiario extends javax.swing.JDialog {
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
        if(filaSeleccionada!=-1){
            //comprobar que la fecha de salida es el dia actual y la hora anteior al despegue sino no se podra modificar
-            vueloDiario=LogicaNegocio.getVueloDiarioistaActual(filaSeleccionada);
+            //vueloDiario=LogicaNegocio.getVueloDiarioListaActual(filaSeleccionada);
             if (LogicaNegocio.vueloDiarioAptoModificaciones(vueloDiario)){
-                
+                ModificarVueloBaseBis modificarVueloBaseBis=new ModificarVueloBaseBis(this, true);
+                modificarVueloBaseBis.setVisible(true);
             }else JOptionPane.showMessageDialog(this, "No se puede moficar vuelo");
            
         }else JOptionPane.showMessageDialog(this, "No hay vuelo diario seleccionado");
@@ -141,7 +142,7 @@ public class ModificarVueloDiario extends javax.swing.JDialog {
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
          filaSeleccionada=tabla.getSelectedRow();
         if(filaSeleccionada!=-1){
-            vueloDiario=LogicaNegocio.getVueloDiarioistaActual(filaSeleccionada);
+            vueloDiario=LogicaNegocio.getVueloDiarioListaActual(filaSeleccionada);
             SimpleDateFormat formato=new SimpleDateFormat("dd/MM/yyyy");
             String fecha=formato.format(vueloDiario.getFechaVuelo());
             

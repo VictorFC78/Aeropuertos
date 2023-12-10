@@ -38,7 +38,7 @@ public class ModificarVueloBase extends javax.swing.JDialog {
     private boolean establecerDatos(){
         filaSeleccionada=tabla.getSelectedRow();
         if (filaSeleccionada!=-1){
-            vueloBase=LogicaNegocio.getVueloBase(filaSeleccionada);
+            vueloBase=LogicaNegocio.getVueloBaseListaActual(filaSeleccionada);
             lblVueloBase.setText(vueloBase.getCodigo());
             lblVueloBase.setVisible(true);
             return true;

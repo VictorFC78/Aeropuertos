@@ -118,7 +118,7 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         filaseleccionada=tabla.getSelectedRow();
         if(filaseleccionada!=-1){
-            VueloBase vuelo=LogicaNegocio.getVueloBase(filaseleccionada);
+            VueloBase vuelo=LogicaNegocio.getVueloBaseListaActual(filaseleccionada);
            int opcion=JOptionPane.showConfirmDialog(this,"Va a eliminar el vuelo "+vuelo.getCodigo(),"ELIMINAR VUELO BASE", JOptionPane.YES_NO_OPTION);
            if (opcion==0){
                LogicaNegocio.eliminarVueloBase(vuelo.getCodigo());
@@ -133,7 +133,7 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
         filaseleccionada=tabla.getSelectedRow();
         if(filaseleccionada!=-1){
             
-        VueloBase vuelo=LogicaNegocio.getVueloBase(filaseleccionada);
+        VueloBase vuelo=LogicaNegocio.getVueloBaseListaActual(filaseleccionada);
         lblVueloBase.setText(vuelo.getCodigo());
         lblVueloBase.setVisible(true);
         }

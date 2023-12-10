@@ -5,49 +5,44 @@
 package com.aeropuertos.componentes;
 
 import java.io.Serializable;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author 34675
  */
-public class MostrarDatosPanel extends javax.swing.JPanel implements Serializable {
+public class JPanelApirestFull extends javax.swing.JPanel implements Serializable{
 
-   private Object[][] filas;
-   private String[] columnames;
-  
-  
-    public MostrarDatosPanel() {
+    /**
+     * Creates new form JPanelApirestFull
+     */
+    private TablaApirestFullModel modelo;
+    private DtoEditorApiRestFull dtoEditor;
+    public JPanelApirestFull() {
         initComponents();
-        refrescarDatosTabla();
+        
+        
     }
 
-    public Object[][] getFilas() {
-        return filas;
+    public DtoEditorApiRestFull getDtoEditor() {
+        return dtoEditor;
     }
 
-    public void setFilas(Object[][] filas) {
-        this.filas = filas;
-    }
-
-    public String[] getColumnames() {
-        return columnames;
-    }
-
-    public void setColumnames(String[] columnames) {
-        this.columnames = columnames;
-    }
-   private void refrescarDatosTabla(){
-       DefaultTableModel modelo=new DefaultTableModel(filas, columnames);
-       tabla.setModel(modelo); 
-   }
-    public void setdatos(Object[][]rows,String[]columns)  {
-        if (filas!=null & columnames!=null & rows[0].length==columns.length){
-            this.filas=rows;
-            this.columnames=columns;
+    public void setDtoEditor(DtoEditorApiRestFull dtoEditor) {
+        this.dtoEditor = dtoEditor;
+        if(dtoEditor!=null){
+         modelo=new TablaApirestFullModel(dtoEditor);
+         tabla.setModel(modelo);
+         
         }
-    }       
-
+        
+    }
+    public void setTableModel(DtoEditorApiRestFull dtoEditor){
+        if (dtoEditor!=null){
+       modelo=new TablaApirestFullModel(dtoEditor);
+       tabla.setModel(modelo);
+      } 
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,14 +63,14 @@ public class MostrarDatosPanel extends javax.swing.JPanel implements Serializabl
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents

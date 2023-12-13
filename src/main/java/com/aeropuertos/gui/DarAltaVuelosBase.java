@@ -9,8 +9,10 @@ import com.aeropuertos.dto.CompaniaAerea;
 import com.aeropuertos.dto.VueloBase;
 import com.aeropuertos.logica.LogicaNegocio;
 import com.aeropuertos.logica.ValidadorDatos;
+import com.aeropuertos.modelos.IEscuchador;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -27,34 +29,53 @@ public class DarAltaVuelosBase extends javax.swing.JDialog {
      */
     private DefaultComboBoxModel<Aeropuerto> modeloLista;
     private DefaultComboBoxModel<Aeropuerto> modeloArptoBase;
+    private DefaultComboBoxModel<CompaniaAerea> modeloCompania;
+    private List<CompaniaAerea> listaCompanias;
+    private int longuitud;
     public DarAltaVuelosBase(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        longuitud=LogicaNegocio.getListaCompaniasAereas().size();
         modeloLista=new DefaultComboBoxModel<>();
         modeloArptoBase=new DefaultComboBoxModel<>();
-        modeloLista.addAll(LogicaNegocio.getListaAeropuetosBis());
+        modeloLista.addAll(LogicaNegocio.getListaAeropuetosDestino());
         modeloArptoBase.addElement(LogicaNegocio.getAeropuertoOrigen());
         comboAOrigen.setModel(modeloArptoBase);
         comboADestino.setModel(modeloLista);
         comboADestino.setSelectedIndex(0);
-        DefaultComboBoxModel<CompaniaAerea> modeloCompania=new DefaultComboBoxModel<>();
-        modeloCompania.addAll(LogicaNegocio.getListaCompaniasAereas());
-        comboCompania.setModel(modeloCompania);
-        comboCompania.setSelectedIndex(0);
-        lblCodigo.setText(LogicaNegocio.getCompaniaAerea(0).getCodigo());
+       refrescarListaCompanias();
+       
+        //lblCodigo.setText(LogicaNegocio.getCompaniaAerea(0).getCodigo());
         spnHSalida.setEditor(new JSpinner.DateEditor(spnHSalida, "HH:mm"));//formato de vista spinner 
         spnHllegada.setEditor(new JSpinner.DateEditor(spnHllegada,"HH:mm"));
         ButtonGroup radioGroup=new ButtonGroup();
         radioGroup.add(rbtnSalida);
         radioGroup.add(rbtnLlegada);
         rbtnSalida.setSelected(true);
+        //interfaz que escucha cambios en la lista de compañias para saber cuando se añade una compañia
+//        IEscuchador escuchador=new IEscuchador() {
+//            @Override
+//            public void realizaraCambios() {
+//                //refrescarListaCompanias();
+//                System.out.println("Lista es de "+LogicaNegocio.getListaCompaniasAereas());
+//            }
+//        };
+//        LogicaNegocio.observable.anaidirEscuchador(escuchador);//se añade el escuchador a la lista de escuchadores
     
     }
+    //refresca la etiqueta del codigo de compañia
     private void refrescarDatos(){
         int indice=comboCompania.getSelectedIndex();
         lblCodigo.setText(LogicaNegocio.getCompaniaAerea(indice).getCodigo());
     } 
-   
+    private void refrescarListaCompanias(){
+        listaCompanias=LogicaNegocio.getListaCompaniasAereas();
+        modeloCompania=new DefaultComboBoxModel<>();
+        modeloCompania.addAll(listaCompanias);
+        comboCompania.setModel(modeloCompania);
+        comboCompania.setSelectedIndex(0);
+        refrescarDatos();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -89,6 +110,13 @@ public class DarAltaVuelosBase extends javax.swing.JDialog {
         btnCrearCompania = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel7.setText("Nombre Compañia");
@@ -219,12 +247,11 @@ public class DarAltaVuelosBase extends javax.swing.JDialog {
                             .addComponent(btnAceptar)
                             .addGap(26, 26, 26)
                             .addComponent(btnCancelar))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(comboCompania, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnCrearCompania, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(comboAOrigen, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(comboCompania, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCrearCompania, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(comboAOrigen, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(spnPlazas, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
@@ -281,22 +308,22 @@ public class DarAltaVuelosBase extends javax.swing.JDialog {
 
     private void comboCompaniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCompaniaActionPerformed
         refrescarDatos();
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_comboCompaniaActionPerformed
-
+//refresca los ComboBox con los datos segun el tipo de vuelo,en este caso para vuelo de salida
     private void rbtnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnSalidaActionPerformed
         comboAOrigen.setModel(modeloArptoBase);
         comboADestino.setModel(modeloLista);
         comboADestino.setSelectedIndex(0);
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_rbtnSalidaActionPerformed
        
-    
+   //refresca los ComboBox con los datos segun el tipo de vuelo,en este caso para vuelo de llegada 
     private void rbtnLlegadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnLlegadaActionPerformed
         comboAOrigen.setModel(modeloLista);
         comboADestino.setModel(modeloArptoBase);
         comboAOrigen.setSelectedIndex(0);
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_rbtnLlegadaActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -306,6 +333,7 @@ public class DarAltaVuelosBase extends javax.swing.JDialog {
         int nCodigo=(Integer)spnCodigo.getValue();
         int plazas=(Integer)spnPlazas.getValue();
         String dOpera=txtDOpera.getText();
+        //se comprueba que todos los datos son correctos
         if (nCodigo<0 || nCodigo>9999){
             JOptionPane.showMessageDialog(this, "Numero entero entre 1 y 9999", "CODIGO VUELO", JOptionPane.ERROR_MESSAGE);
         }
@@ -323,7 +351,11 @@ public class DarAltaVuelosBase extends javax.swing.JDialog {
             LocalTime timeSalida=ValidadorDatos.parseDateLocalTimeHora(hSalida);
             LocalTime timeLlegada=ValidadorDatos.parseDateLocalTimeHora(hLlegada);
             VueloBase vueloBase=new VueloBase(codigo+nCodigo, origen, destino, plazas,timeSalida , timeLlegada, diasOpera);
-            if (LogicaNegocio.anaidirVueloBaseGUI(vueloBase));
+           //se comprueba que no exista un vuelo igual 
+            if (LogicaNegocio.anaidirVueloBaseGUI(vueloBase)){
+                JOptionPane.showMessageDialog(this, "Se creado el vuelo base"+vueloBase.getCodigo());
+                txtDOpera.setText("");
+            }
             else  JOptionPane.showMessageDialog(this, "El vuelo ya existe", "COINCIDENCIA VUELO BASE", JOptionPane.ERROR_MESSAGE);  
 
         }
@@ -338,6 +370,11 @@ public class DarAltaVuelosBase extends javax.swing.JDialog {
         DarAltaCompania altaCompania=new DarAltaCompania(this, true);
         altaCompania.setVisible(true);
     }//GEN-LAST:event_btnCrearCompaniaActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+    refrescarListaCompanias();
+    
+    }//GEN-LAST:event_formWindowGainedFocus
 
     /**
      * @param args the command line arguments

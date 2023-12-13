@@ -10,7 +10,7 @@ import java.util.Comparator;
  *
  * @author 34675
  */
-public class ComparadorVuelos implements Comparator<VueloDiario>{
+public class ComparadorVuelosHoras implements Comparator<VueloDiario>{
 
     @Override
     public int compare(VueloDiario o1, VueloDiario o2) {

@@ -38,7 +38,7 @@ public class ModificarVueloBaseBis extends javax.swing.JDialog {
         spnHLlegada.setEditor(new JSpinner.DateEditor(spnHLlegada, "HH:mm"));//formato HH:mm para Spinner hOra LLegada
         spnHSalida.setEditor(new JSpinner.DateEditor(spnHSalida, "HH:mm"));
         ButtonGroup grupoRbtn=new ButtonGroup();//radio grupo para los radioboton
-        modeloLoistaArptos.addAll(LogicaNegocio.getListaAeropuetosBis());
+        modeloLoistaArptos.addAll(LogicaNegocio.getListaAeropuetosDestino());
         modeloarptoBase.addElement(LogicaNegocio.getAeropuertoOrigen());
         grupoRbtn.add(rbtnSalida);//añadimos radiobutton al grupo
         grupoRbtn.add(rbtnLlegada);

@@ -17,6 +17,7 @@ public class ModificarCompaniaAerea extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         refrescarTabla();
+        lblCompania.setVisible(false);
     }
     public int getFilaSeleccionada(){
         return filaSeleccionada;
@@ -39,20 +40,16 @@ public class ModificarCompaniaAerea extends javax.swing.JDialog {
         tabla = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        lblCompania = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        tabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
             }
-        ));
+        });
         jScrollPane1.setViewportView(tabla);
 
         btnCancelar.setText("Salir");
@@ -62,12 +59,19 @@ public class ModificarCompaniaAerea extends javax.swing.JDialog {
             }
         });
 
-        btnModificar.setText("Modificar");
+        btnModificar.setText("Seleccionar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
             }
         });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("COMPAÑIA");
+
+        lblCompania.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCompania.setForeground(new java.awt.Color(255, 0, 0));
+        lblCompania.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,7 +82,10 @@ public class ModificarCompaniaAerea extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblCompania, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCancelar)))
@@ -92,7 +99,9 @@ public class ModificarCompaniaAerea extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
-                    .addComponent(btnModificar))
+                    .addComponent(btnModificar)
+                    .addComponent(jLabel1)
+                    .addComponent(lblCompania))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -115,11 +124,19 @@ public class ModificarCompaniaAerea extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        lblCompania.setText(LogicaNegocio.getCompaniaAerea(tabla.getSelectedRow()).getNombre());
+        lblCompania.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tablaMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCompania;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }

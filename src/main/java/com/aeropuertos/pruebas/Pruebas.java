@@ -5,11 +5,7 @@
 package com.aeropuertos.pruebas;
 import com.aeropuertos.gui.PantallaPrincipal;
 import com.aeropuertos.logica.LogicaNegocio;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+
 
 
 

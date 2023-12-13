@@ -66,7 +66,7 @@ private CompaniaAerea compania=null;
         });
         jScrollPane1.setViewportView(jTable1);
 
-        btnAceptar.setText("Aceptar");
+        btnAceptar.setText("Eliminar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);

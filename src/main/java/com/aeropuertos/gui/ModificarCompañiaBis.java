@@ -99,7 +99,7 @@ public class ModificarCompañiaBis extends javax.swing.JDialog {
         jLabel1.setText("DATOS ACTUALES");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("DATOS ACTUALES");
+        jLabel2.setText("DATOS NUEVOS");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel3.setText("Codigo");

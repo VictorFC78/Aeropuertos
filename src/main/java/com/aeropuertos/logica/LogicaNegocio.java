@@ -6,19 +6,24 @@ package com.aeropuertos.logica;
 
 import com.aeropuertos.dto.Aeropuerto;
 import com.aeropuertos.dto.CompaniaAerea;
-import com.aeropuertos.dto.ComparadorVuelos;
+import com.aeropuertos.dto.ComparadorVuelosFecha;
+import com.aeropuertos.dto.ComparadorVuelosHoras;
 import com.aeropuertos.dto.Municipio;
 import com.aeropuertos.dto.VueloBase;
 import com.aeropuertos.dto.VueloDiario;
+//import com.aeropuertos.modelos.IEscuchador;
+//import com.aeropuertos.modelos.IObservable;
 import com.aeropuertos.persistencia.Persistencia;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
+
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,7 +35,7 @@ import java.util.List;
  */
 public class LogicaNegocio {
     private static List<Aeropuerto> listaAeropuertos=new ArrayList<>();//lista con todos los aeropuertos
-    private static List<Aeropuerto> listAeropuertosBis=new ArrayList<>();
+    private static List<Aeropuerto> listAeropuertosDestino=new ArrayList<>();
     private static Aeropuerto aeropuertoOrigen;//aeropuerto de origen
     private static List<CompaniaAerea> listaCompaniaAerea=new ArrayList<>();
     private static List<VueloBase> listaVuelosBaseCompleta=new ArrayList<>();
@@ -42,7 +47,25 @@ public class LogicaNegocio {
     private static List<VueloDiario> listaActualVuelosDiarios=new ArrayList<>();
     private static List<Municipio> listaMunicipio=new ArrayList<>();
     private static final String APIKEY="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW51em83OEBnbWFpbC5jb20iLCJqdGkiOiIxYzNmYzQxYy1lMTQ0LTRmOWEtYTA5MS0wNWUyZDA1OTAwZTMiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY5OTk4NzM3OSwidXNlcklkIjoiMWMzZmM0MWMtZTE0NC00ZjlhLWEwOTEtMDVlMmQwNTkwMGUzIiwicm9sZSI6IiJ9.jUiuQP3W2c3PM4Di-VSih5zwOHrjAiYZvsP9Lv6PQm4";
-  
+//    private static List<IEscuchador> escuchadors=new ArrayList<>();
+//    public static IObservable observable=new IObservable() {
+//        @Override
+//        public void anaidirEscuchador(IEscuchador escuchador) {
+//            escuchadors.add(escuchador);
+//        }
+//
+//        @Override
+//        public void eliminarEscuchador(IEscuchador escucjador) {
+//            escuchadors.remove(escucjador);
+//        }
+//
+//        @Override
+//        public void nofificarCambio() {
+//            for (IEscuchador e:escuchadors){
+//                e.realizaraCambios();
+//            }
+//        }
+//    };
  
     
     public static void inicializarSistema(){
@@ -53,7 +76,9 @@ public class LogicaNegocio {
         Persistencia.leerListaVuelosDiariosCsv();//cargamos todo los vuelos diarios en memoria
         //la asigancion de aeropuerto base, vuelos base y vuelos diarios se realiz cuando se agina el aeropuerto base
     }
-
+    public static String getApiKey(){
+        return APIKEY;
+    }
     /**************************Municipios*********************************************/
     public static void anaidirMunicipioLista(Municipio municipio){
         listaMunicipio.add(municipio);
@@ -71,27 +96,31 @@ public class LogicaNegocio {
         }
         return null;
     }
-    //establece el aeropuerto base de la aplicacion
+    //establece el aeropuerto base de la aplicacion y rellena una lista con aeropuertos destino
     public static void setAeropuertoBase(Aeropuerto aeropuerto){
         aeropuertoOrigen=aeropuerto;
+        rellenarListaAeropuetosDestino();
     }
     //retorna el aeropuerto base
     public static Aeropuerto getAeropuertoOrigen(){
        return aeropuertoOrigen;
+    }
+    //rellena una lista con todos los aeropueros destino
+    private static void rellenarListaAeropuetosDestino(){
+        for (Aeropuerto a:listaAeropuertos){
+            if(!a.equals(aeropuertoOrigen))listAeropuertosDestino.add(a);
+        }
     }
     //añadir un aeropuerto a la lista
     public static void anaidirAeropuertoPersintencia(Aeropuerto aeropuerto){
         listaAeropuertos.add(aeropuerto);
     }
     //lista de todos los aeropuertos excluyendo dse la lista el aeropuerto base
-    public static List<Aeropuerto> getListaAeropuetosBis(){
-        for (Aeropuerto a:listaAeropuertos){
-            if (!a.getIata().equals(aeropuertoOrigen.getIata()))listAeropuertosBis.add(a);
-        }
-        return listAeropuertosBis;
+    public static List<Aeropuerto> getListaAeropuetosDestino(){
+        return listAeropuertosDestino;
     }
     //devuelve la lista completa de aeropuertos
-    public static List<Aeropuerto> getListaAeropuertos(){
+    public static List<Aeropuerto> getListaAeropuertosOriginal(){
         return listaAeropuertos;
     }// </editor-fold> 
     /**************************************************************************************/
@@ -105,6 +134,7 @@ public class LogicaNegocio {
         return null;
     }
     public static CompaniaAerea getCompaniaAerea(int posicion){
+        
         return listaCompaniaAerea.get(posicion);
     }
     //comprueba que existe una compania
@@ -118,10 +148,7 @@ public class LogicaNegocio {
     public static boolean eliminarCompaniaAerea(String codigo){
         //recupera la lista de vuelos base pertenecientes a una compañia
         List<VueloBase>lista=buscarVuelosBaseCodigoCompania(codigo);
-        //eliminamos los vuelo base de la lista completa y los eliminamos de la lista actula
-        for (VueloBase v:lista){
-           
-        }  
+        //eliminamos los vuelo base de la lista completa y los eliminamos de la lista actula 
         for (VueloBase v:lista){
             eliminarVueloBase(v.getCodigo());
         }  
@@ -137,6 +164,8 @@ public class LogicaNegocio {
     //añade una compañia aerea a la lista en la persistencia
     public static void anaidirCompaniaAerea(CompaniaAerea compania){
         listaCompaniaAerea.add(compania);
+        //observable.nofificarCambio();
+        
     }
  
     //modifica los datos de una compañia sin modificar su nombre ni su codigo
@@ -221,30 +250,14 @@ public class LogicaNegocio {
         }
         return null;
     }
-//    //recupera los vuelos base cuyo aeropuerto origen es el aeropuerto base 
-//    public static List<VueloBase> getListaVuelosSalida(){
-//        List<VueloBase> lista=new ArrayList<>();
-//        for (VueloBase v:listaActualVuelosBase){
-//            if(v.getOrigen().equals(aeropuertoOrigen))lista.add(v);
-//        }
-//        return lista;
-//    }
-//    //recupera los vuelos base cuyo aeropuerto de destino es igual al eropuerto base
-//    public static List<VueloBase> getListaVuelosLlegada(){
-//        List<VueloBase> lista=new ArrayList<>();
-//        for (VueloBase v:listaActualVuelosBase){
-//            if(v.getDestino().equals(aeropuertoOrigen))lista.add(v);
-//        }
-//        return lista;
-//    }
+
     //recupera un vuelo base por posicion
     public static VueloBase getVueloBaseListaActual(int pos){
         return listaActualVuelosBase.get(pos);
     }
      //elimina un vuelo segun su codigo segun su codigo
     public static void eliminarVueloBase(String codigo){
-        //elimina todos los vuelos diarios asociados en la lista completa
-      
+        //elimina todos los vuelos diarios asociados en la lista completa 
         Iterator<VueloDiario>it = listaVuelosDiariosCompleta.iterator();
         while(it.hasNext()){
             if(it.next().getCodigo().equals(codigo)) it.remove();
@@ -332,8 +345,14 @@ public class LogicaNegocio {
                 listaActualVuelosDiarios.add(v.getVuelosDiario().get(i));
             }
         }
+        ordenarListaActualVuelosDiarios();
     }
-    
+    //ordena la lista de vuelos diarios por fecha y por hora, se llama cada vez que tarbaje con todas las listas
+    private static void ordenarListaActualVuelosDiarios(){
+        Collections.sort(listaActualVuelosDiarios, new ComparadorVuelosHoras());
+        Collections.sort(listaActualVuelosDiarios, new ComparadorVuelosFecha());
+
+    }
     //recuperra la lista de vuelos diarios
     public static List<VueloDiario> getListaVuelosDIariosCompleta(){
         return listaVuelosDiariosCompleta;
@@ -378,26 +397,85 @@ public class LogicaNegocio {
         }
         return listafinal;
     }
-    /*retorna una lista con los vuelos diarios de salida segun fecha, recibe un boleano que determina
+    /*retorna una lista con los vuelos diarios segun fecha, recibe un boleano que determina
     si la lista es de vuelos de salida(true) de llegada(false)
      */ 
     public static List<VueloDiario> getVuelosDiariosFecha(Date fecha, boolean tipoVuelo){
         //se comprueba que la fecha es igual al dia actual o superior
-        int valorFecha=ValidadorDatos.fechaCorrectaCreacionVuelos(fecha);
+        int valorFecha=ValidadorDatos.compararFechaActual(fecha);
         List<VueloDiario> lista;
         if(valorFecha>=0){
             if(tipoVuelo){
                 lista=getVuelosDiariosCoincidenciaFecha(getListaVuelosDiariosSalida(), fecha);
-                Collections.sort(lista,new ComparadorVuelos());
+                Collections.sort(lista,new ComparadorVuelosHoras());
                 return lista;
             }else{
                 lista=getVuelosDiariosCoincidenciaFecha(getListaVuelosDiariosLlegada(), fecha);
-                Collections.sort(lista,new ComparadorVuelos());
+                Collections.sort(lista,new ComparadorVuelosHoras());
                 return lista;
             }
         }
         return null;
     }
+    //retorna una lista de vuelos diarios pertenecientes a una compañia y coincidentes con una fecha
+    public static List<VueloDiario> getVuelosDiariosCompania(Date fecha, CompaniaAerea compania){
+        int valorFecha=ValidadorDatos.fechaCorrectaCreacionVuelos(fecha);
+        if(valorFecha>=0){
+            List<VueloDiario> lista=new ArrayList<>();
+            for(VueloDiario vd:listaActualVuelosDiarios){
+                if(vd.getCodigo().contains(compania.getCodigo())) lista.add(vd);
+            }
+            return getVuelosDiariosCoincidenciaFecha(lista, fecha);
+        }    
+        return null;
+    }
+    //retorna una lista diaria de vuelo a un destino determinado un semana desde fecha
+    public static List<VueloDiario> getVuelosDiariosDetino(Aeropuerto destino){
+        //creamos la instancia de la feecha actual y de la fecha dentro de una semama
+        GregorianCalendar gregorianFechaFinal=new GregorianCalendar();
+        gregorianFechaFinal.add(Calendar.DAY_OF_YEAR,7);
+        Date dateFechaFinal=gregorianFechaFinal.getTime();
+        LocalDate fechaActual=LocalDate.now();
+        LocalDate fechaFinal=LocalDate.parse(formatoFechaPaneles.format(dateFechaFinal));
+        //recorre la lista actual de vuelos base y extrae los que tengan como arpto destino el mismo que e`l que se busca
+        List<VueloBase> listaVuelosDestino=new ArrayList<>();
+        for (VueloBase vb:listaActualVuelosBase){
+            if(vb.getDestino().equals(destino))listaVuelosDestino.add(vb);
+        }
+        //extrae los vuelos diarios de los vuelos base durante la siguiente semana
+        List<VueloDiario> listaVueloDiariosDestino=new ArrayList<>();
+        for (VueloBase vb:listaVuelosDestino){
+            for (VueloDiario vd:vb.getVuelosDiario()){//se comprueba si la fecha de cada vuelo diario esta entre las fechas comprendiads
+                LocalDate fechaVuelo=LocalDate.parse(formatoFechaPaneles.format(vd.getFechaVuelo()));
+                if(fechaVuelo.compareTo(fechaActual)>=0 && fechaVuelo.compareTo(fechaFinal)<=0) listaVueloDiariosDestino.add(vd);
+            }
+        }
+        Collections.sort(listaVueloDiariosDestino, new ComparadorVuelosFecha());
+        return listaVueloDiariosDestino;
+    }
+    //retorna una lista de vuelos completados segun fecha
+    public static List<VueloDiario> getListaVuelosDiariosRecaudacion(Date fecha){
+        //solo se realiza cuando la fecha la actual o dias anteriores, se compara fecha actual con la fecha pasada
+     int compararFechas=ValidadorDatos.compararFechaActual(fecha);
+     List<VueloDiario> lista=new ArrayList<>();
+        if(compararFechas<0){
+            for (VueloDiario vd:listaActualVuelosDiarios){
+                if(ValidadorDatos.compararFechas(vd.getFechaVuelo(), fecha)==0)lista.add(vd);
+            }
+            return lista;
+        }else if(compararFechas==0){
+            LocalTime horaAcual=LocalTime.now();
+            for (VueloDiario vd:listaActualVuelosDiarios){
+                if(ValidadorDatos.compararFechas(vd.getFechaVuelo(), fecha)==0 
+                    && vd.getHoraSlida().compareTo(horaAcual)<0){
+                    lista.add(vd);
+                }
+            }
+            return lista;
+        }
+        return null;
+    }
+        
     //eliminar vuelo diario de un vuelo base 
     public static boolean eliminarVueloDiarioVueloBase(VueloDiario vueloDiario){
         //buscar el vuelo base mediante el codigo del vuelo diario
@@ -464,10 +542,14 @@ public class LogicaNegocio {
         original.setPrecio(nuevo.getPrecio());
         VueloDiario vd=getVueloDiarioListaCompleta(original.getCodigo());//vuelo en la lista completa
         modificarVueloDiario(vd, nuevo);
+        //una vez modificado reordenamos lalista de vuelos diarios
+        ordenarListaActualVuelosDiarios();
         return true;
     }
    
 // </editor-fold> 
+
+
 }
 /*
 Proceso de carga en memoria:

@@ -77,7 +77,7 @@ public class ModificarVueloBase extends javax.swing.JDialog {
             }
         });
 
-        btnModificar.setText("Modificar");
+        btnModificar.setText("Seleccionar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);

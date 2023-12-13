@@ -20,6 +20,13 @@ public class DarAltaCompania extends javax.swing.JDialog {
         comboMunicipio.setModel(modelo);
         comboMunicipio.setSelectedIndex(0);
     }
+    private void borrarDatos(){
+        TextFieldNombre.setText("");
+        TextFieldDireccion.setText("");
+        TextFieldTlfPasaj.setText("");
+        TextFieldTlfAerpto.setText("");
+        TextFieldCodigo.setText("");
+    }
     private void darAlta(){
        String nombre=TextFieldNombre.getText();
         String direccion=TextFieldDireccion.getText();
@@ -36,12 +43,14 @@ public class DarAltaCompania extends javax.swing.JDialog {
         }else{//si esta todo correcto creamos la compañia y comprobamos si hay coincidencia, sino la hay añadimos
                CompaniaAerea compania=new CompaniaAerea(nombre, direccion, municipio, tlfPasaj, tlfAerpto, codigo);
                if(!LogicaNegocio.coincidenciaCompaniaAerea(compania)){
-                   LogicaNegocio.anaidirCompaniaAerea(compania);
-                   TextFieldNombre.setText("");
-                   TextFieldDireccion.setText("");
-                   TextFieldTlfPasaj.setText("");
-                   TextFieldTlfAerpto.setText("");
-                   TextFieldCodigo.setText("");
+                   int ok=JOptionPane.showConfirmDialog(this, "¿Desea crear esta compañia?","NUEVA COMPAÑIA", JOptionPane.YES_NO_OPTION);
+                   if(ok==0){
+                        LogicaNegocio.anaidirCompaniaAerea(compania);
+                        borrarDatos();   
+                   }else{
+                     borrarDatos();
+                   }
+                   
                }else {
                    JOptionPane.showMessageDialog(this, "La compañia ya existe", "LISTA DE COMPAÑIAS", JOptionPane.ERROR_MESSAGE);
  
@@ -137,7 +146,7 @@ public class DarAltaCompania extends javax.swing.JDialog {
                     .addComponent(TextFieldTlfPasaj)
                     .addComponent(TextFieldTlfAerpto)
                     .addComponent(comboMunicipio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TextFieldCodigo))
+                    .addComponent(TextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37))
             .addGroup(layout.createSequentialGroup()
                 .addGap(155, 155, 155)

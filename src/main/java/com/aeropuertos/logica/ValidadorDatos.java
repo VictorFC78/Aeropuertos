@@ -27,6 +27,7 @@ public class ValidadorDatos {
    private static final String codigo="Formato:dos vocales mayusculas o vocal mayuscula y digito";
    private static final SimpleDateFormat formatoHora=new SimpleDateFormat("HH:mm");
    private static final SimpleDateFormat formatoFecha=new SimpleDateFormat("dd/MM/yyyy");
+   private static final SimpleDateFormat formatoFechaLocalDate=new SimpleDateFormat("yyyy-MM-dd");
     public static boolean formatoTelefono(String numTelf,Component p){
         if(numTelf.matches("[+]\\d{11,14}")){
             return true;
@@ -102,15 +103,12 @@ public class ValidadorDatos {
     }
     //comprueba que el vuelo que se va a crear tiene un fecha igual o superior al dia de creacion
     public static int fechaCorrectaCreacionVuelos(Date fecha){
-        SimpleDateFormat formato=new SimpleDateFormat("yyyy-MM-dd");//formato de fecha para el Date 
-        String fechaVueloString=formato.format(fecha);//extrae del date la fecha en el formato deseado
-        LocalDate fechaVuelo=LocalDate.parse(fechaVueloString);
+        LocalDate fechaVuelo=LocalDate.parse(formatoFechaLocalDate.format(fecha));
         LocalDate fechaActual=LocalDate.now();//creamos una instancia del dia actual
         return fechaVuelo.compareTo(fechaActual);
     }
     //comorueba si la fecha introducida coincide con dias de la semana que opera el vuelo
     public static boolean coincidenciaFechaDiasOpera(Date fechaVuelo,VueloBase v){
-       
         DateTimeFormatter dformato=DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fechaVueloString=formatoFecha.format(fechaVuelo);//obtien la fecha vuelo en String
         LocalDate fecha=LocalDate.parse(fechaVueloString, dformato);//retoena una instancia de LocalDate de la fecha de vuelo con nuestrio formato
@@ -154,6 +152,12 @@ public class ValidadorDatos {
         LocalDate fecha2=parseDateLocalDateFecha(date2);
         return fecha1.compareTo(fecha2);
         
+    }
+    public static int compararFechaActual(Date fecha){
+        //solo se realiza cuando la fecha la actual o dias anteriores, se compara fecha actual con la fecha pasada
+        LocalDate fechaActual=LocalDate.now();//fecha actual
+        LocalDate fechaSolicitada=LocalDate.parse(formatoFechaLocalDate.format(fecha));
+        return fechaSolicitada.compareTo(fechaActual);
     }
     //parsea un Date a LocatIme
     public static LocalTime parseDateLocalTimeHora(Date date){

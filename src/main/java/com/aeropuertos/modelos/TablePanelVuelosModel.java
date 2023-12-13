@@ -4,18 +4,18 @@
  */
 package com.aeropuertos.modelos;
 
+import com.aeropuertos.componentes.ApirestFullTemperaturas;
+import com.aeropuertos.componentes.DatosClima;
 import com.aeropuertos.dto.Aeropuerto;
 import com.aeropuertos.dto.VueloBase;
 import com.aeropuertos.dto.VueloDiario;
-import com.aeropuertos.logica.LogicaNegocio;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.AbstractList;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -31,7 +31,6 @@ public class TablePanelVuelosModel extends AbstractTableModel{
     private Object[][]rows;
     private List<Object> rowsinicial;
     private SimpleDateFormat formato=new SimpleDateFormat("dd/MM/yyyy");
-    
     public TablePanelVuelosModel(List<VueloDiario> listaVuelosDiarios, List<VueloBase> listaVuelosBase, boolean tipoVuelo) {
         this.listaVuelosDiarios = listaVuelosDiarios;
         this.listaVuelosBase = listaVuelosBase;
@@ -39,7 +38,7 @@ public class TablePanelVuelosModel extends AbstractTableModel{
         rowsinicial=new ArrayList<>();
         ArrayList rowsTotal=new ArrayList<>();
         
-        columclass=new Class<?>[]{Aeropuerto.class,String.class,LocalTime.class,LocalTime.class};
+        columclass=new Class<?>[]{Aeropuerto.class,String.class,LocalTime.class,LocalTime.class,String.class,String.class};
         if (tipoVuelo){//si el vuelo es de salida para cada vuelo recuperamos el aeropuerto de destino
             columnames=new String[]{"ARPTO DESTINO","FECHA","H.SALIDA","H.LLEGADA"};
             for (VueloDiario vd:listaVuelosDiarios){
@@ -74,7 +73,6 @@ public class TablePanelVuelosModel extends AbstractTableModel{
             }
         }
     }
-
     private VueloBase getVueloBaseCodigo(List<VueloBase>lista,String codigo){
         for (VueloBase v:lista){
             if (v.getCodigo().equals(codigo))return v;

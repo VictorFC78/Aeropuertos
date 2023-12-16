@@ -365,6 +365,13 @@ public class LogicaNegocio {
     public static VueloDiario getVueloDiarioListaActual(int pos){
         return listaActualVuelosDiarios.get(pos);
     }
+    //recuepra un vuelo diario de la lista que se esta utilizando mediante su codigo
+    public static VueloDiario getVueloDiarioListaActual(String codigo){
+        for (VueloDiario v:listaActualVuelosDiarios){
+            if (v.getCodigo().equals(codigo))return v;
+        }
+        return null;
+    }
     private static VueloDiario getVueloDiarioListaCompleta(String codigo){
         for (VueloDiario v:listaVuelosDiariosCompleta){
             if (v.getCodigo().equals(codigo)) return v;

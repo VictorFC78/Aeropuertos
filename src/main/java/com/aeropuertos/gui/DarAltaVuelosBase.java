@@ -150,7 +150,7 @@ public class DarAltaVuelosBase extends javax.swing.JDialog {
 
         lblCodigo.setText("VY");
 
-        spnCodigo.setModel(new javax.swing.SpinnerNumberModel(0, 0, 9999, 1));
+        spnCodigo.setModel(new javax.swing.SpinnerNumberModel());
         spnCodigo.setMinimumSize(new java.awt.Dimension(75, 22));
         spnCodigo.setPreferredSize(new java.awt.Dimension(75, 22));
 

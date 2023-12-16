@@ -148,7 +148,7 @@ public class ModificarVueloBaseBis extends javax.swing.JDialog {
         lblDiasOpera.setForeground(new java.awt.Color(0, 204, 204));
         lblDiasOpera.setText("jLabel14");
 
-        spnCodigo.setModel(new javax.swing.SpinnerNumberModel(0, 0, 9999, 1));
+        spnCodigo.setModel(new javax.swing.SpinnerNumberModel());
 
         comboAOrigen.setMinimumSize(new java.awt.Dimension(200, 22));
         comboAOrigen.setName(""); // NOI18N

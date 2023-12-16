@@ -69,11 +69,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         mnuConsultarVDiario = new javax.swing.JMenuItem();
         mnuConsultas = new javax.swing.JMenu();
         mnuSalidas = new javax.swing.JMenuItem();
-        mnuLlegada = new javax.swing.JMenuItem();
         mnuVuelosCompania = new javax.swing.JMenuItem();
         mnuVuelosDestinos = new javax.swing.JMenuItem();
         mnuRecaudacion = new javax.swing.JMenuItem();
         mnuClima = new javax.swing.JMenuItem();
+        mnuAyuda = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -201,21 +201,13 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         mnuConsultas.setText("Consultas");
 
-        mnuSalidas.setText("Vuelos de Salida");
+        mnuSalidas.setText("Vuelos Salida/Llegada");
         mnuSalidas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuSalidasActionPerformed(evt);
             }
         });
         mnuConsultas.add(mnuSalidas);
-
-        mnuLlegada.setText("Vuelos de Llegada");
-        mnuLlegada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuLlegadaActionPerformed(evt);
-            }
-        });
-        mnuConsultas.add(mnuLlegada);
 
         mnuVuelosCompania.setText("Vuelos por Compañia");
         mnuVuelosCompania.addActionListener(new java.awt.event.ActionListener() {
@@ -250,6 +242,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         mnuConsultas.add(mnuClima);
 
         jMenuBar1.add(mnuConsultas);
+
+        mnuAyuda.setText("Ayuda");
+        jMenuBar1.add(mnuAyuda);
 
         setJMenuBar(jMenuBar1);
 
@@ -348,18 +343,17 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             mnuVuelosBase.setEnabled(true);
             mnuVuelosDiarios.setEnabled(true);
             mnuConsultas.setEnabled(true);
-            LogicaNegocio.rellenarListaActualVuelosBase();
+            LogicaNegocio.rellenarListaActualVuelosBase();//lista de vuyelos base que contega al aeropurto base
             LogicaNegocio.referenciarVuelosDiarioVueloBase();//una vez se tienen los vuelo base se les asocia sus vuelo diarios corresponsientes
-            LogicaNegocio.rellenarListaActualVuelosDiarios();
+            LogicaNegocio.rellenarListaActualVuelosDiarios();//vuelos diarios que contengan al aeropuerto base
             
         }
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         Persistencia.escribirCompaniaCsv();
-        System.out.println("Lista final vuelos base:"+LogicaNegocio.getListaVueloBaseCompleta().size());
-        System.out.println("Lista final vuelos diarios:"+LogicaNegocio.getListaVuelosDIariosCompleta().size());
-        // TODO add your handling code here:
+        Persistencia.escribirListaVuelosBaseCsv();
+        Persistencia.escribirVuelosDiariosCsv();
     }//GEN-LAST:event_formWindowClosing
 
     private void mnuConsultarVDiarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuConsultarVDiarioActionPerformed
@@ -370,45 +364,32 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private void mnuModificarVDiarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuModificarVDiarioActionPerformed
        ModificarVueloDiario modificarVueloDiario=new ModificarVueloDiario(this, true);
        modificarVueloDiario.setVisible(true);
-// TODO add your handling code here:
     }//GEN-LAST:event_mnuModificarVDiarioActionPerformed
 
     private void mnuSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSalidasActionPerformed
-        PanelSalidas panelSalidas=new PanelSalidas(this, true);
-        panelSalidas.setVisible(true);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mnuSalidasActionPerformed
 
-    private void mnuLlegadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLlegadaActionPerformed
-        PanelLlegadas panelLlegadas=new PanelLlegadas(this, true);
-        panelLlegadas.setVisible(true);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mnuLlegadaActionPerformed
+            PanelVuelosSalidaLlegada panel=new PanelVuelosSalidaLlegada(this, true);
+            panel.setVisible(true);
+    }//GEN-LAST:event_mnuSalidasActionPerformed
 
     private void mnuVuelosCompaniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVuelosCompaniaActionPerformed
         PanelVuelosCompania panelesVueloscomapnia=new PanelVuelosCompania(this, true);
         panelesVueloscomapnia.setVisible(true);
-        // TODO add your handling code here:
     }//GEN-LAST:event_mnuVuelosCompaniaActionPerformed
 
     private void mnuVuelosDestinosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVuelosDestinosActionPerformed
         PanelVuelosDestinoConcreto destinoConcreto=new PanelVuelosDestinoConcreto(this, true);
         destinoConcreto.setVisible(true);
-        // TODO add your handling code here:
     }//GEN-LAST:event_mnuVuelosDestinosActionPerformed
 
     private void mnuClimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuClimaActionPerformed
         PanelTemperaturas temperaturas=new PanelTemperaturas(this, true);
         temperaturas.setVisible(true);
-        // TOD prurbaO add your handling code here:
     }//GEN-LAST:event_mnuClimaActionPerformed
 
     private void mnuRecaudacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRecaudacionActionPerformed
         PanelRecaudacion recaudacion=new PanelRecaudacion(this, true);
         recaudacion.setVisible(true);
-
-
-        // TODO add your handling code here:
     }//GEN-LAST:event_mnuRecaudacionActionPerformed
 
    
@@ -419,6 +400,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JComboBox<Aeropuerto> comboBoxAeropuertos;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem mnuAltaVueloDiario;
+    private javax.swing.JMenu mnuAyuda;
     private javax.swing.JMenuItem mnuClima;
     private javax.swing.JMenu mnuCompania;
     private javax.swing.JMenuItem mnuConsultarCmp;
@@ -430,7 +412,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuEliminarCmp;
     private javax.swing.JMenuItem mnuEliminarVD;
     private javax.swing.JMenuItem mnuEliminarVuelo;
-    private javax.swing.JMenuItem mnuLlegada;
     private javax.swing.JMenuItem mnuModificarCmp;
     private javax.swing.JMenuItem mnuModificarVDiario;
     private javax.swing.JMenuItem mnuModificarVuelo;

@@ -128,18 +128,10 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mnuSalidas">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Vuelos de Salida"/>
+                <Property name="text" type="java.lang.String" value="Vuelos Salida/Llegada"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuSalidasActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnuLlegada">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Vuelos de Llegada"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuLlegadaActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnuVuelosCompania">
@@ -175,6 +167,11 @@
               </Events>
             </MenuItem>
           </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="mnuAyuda">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ayuda"/>
+          </Properties>
         </Menu>
       </SubComponents>
     </Menu>

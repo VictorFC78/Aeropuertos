@@ -90,7 +90,7 @@ public class DarAltaVueloDiario extends javax.swing.JDialog {
 
         spinnerHLlegada.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.MINUTE));
 
-        spinnerPlazas.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        spinnerPlazas.setModel(new javax.swing.SpinnerNumberModel());
 
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {

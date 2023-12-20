@@ -10,7 +10,12 @@ import java.net.URL;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+/**
+ * @author Victor Fernandez
+ * Clase ApirestFullTemperatutas, clase que realiza una consulta a la apirestfull AEMETOPENDATA
+ * para consultar las temperaturas minima y maxima mediante un codigo de municipio ,los datos los devuelve
+ * en un objecto {@link DatosClima}
+ */
 public class ApirestFullTemperaturas implements Serializable{
     private DatosClima datosClima;
     public ApirestFullTemperaturas(String municipio,String apiKey) throws IOException {
@@ -22,7 +27,14 @@ public class ApirestFullTemperaturas implements Serializable{
     public DatosClima getDatosClima() {
         return datosClima;
     }
-    
+    /**
+     * metodo que hace la peticion al apirest y retrona un DatosClima con la temperatuta maxima
+     * y minima
+     * @param uri la direccion de url para la, peticion
+     * @return DatosClima
+     * @throws MalformedURLException
+     * @throws IOException 
+     */
     private  DatosClima extaerDatosPeticion(String uri) throws MalformedURLException, IOException{
         if(!uri.isEmpty()){
         URL url = new URL(uri);//variable URL para la peticion
@@ -53,7 +65,14 @@ public class ApirestFullTemperaturas implements Serializable{
         }
             return null;
     }
-    //metodo peticion al apirest y devuelve un string con la URL de los datos de la peticion
+    /**
+     * metodo que hace una peticion ala apiret de opendata.aemet y retorna otra url 
+     * @param municipio municipio de la peticion
+     * @param apiKey apikey para la peticion
+     * @return url que contiene los datos
+     * @throws MalformedURLException
+     * @throws IOException 
+     */
     private  String  peticionApirest(String municipio,String apiKey) throws MalformedURLException, IOException{
         //establecemos la URL  a la que vamos a solicitar los datos
         URL url=new URL("https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/"+municipio);
@@ -83,4 +102,4 @@ public class ApirestFullTemperaturas implements Serializable{
         }
      return urldatos ;
     }
-}//"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW51em83OEBnbWFpbC5jb20iLCJqdGkiOiI1YjZiYjlkOC0zN2E4LTRlZDUtYWM4OS1mNWUyMDkxZGI4MjQiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTcwMDMwODA1MywidXNlcklkIjoiNWI2YmI5ZDgtMzdhOC00ZWQ1LWFjODktZjVlMjA5MWRiODI0Iiwicm9sZSI6IiJ9.AMmaLLtPURPjV5rzIcJBjpKXxbHQWUNycdDjFulNHfs"
+}

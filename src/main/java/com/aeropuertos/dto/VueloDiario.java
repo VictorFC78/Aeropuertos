@@ -4,7 +4,10 @@ package com.aeropuertos.dto;
 import java.time.LocalTime;
 import java.util.Date;
 
-
+/**
+ * @author Victor Fernandez
+ *Clase VueloBase con atributos codigo,origen,destino,plazas,horaSalida,horaLlegada,diasOpera,vuelosDiarios
+ */
 public class VueloDiario {
     private String codigo;
     private Date fechaVuelo;

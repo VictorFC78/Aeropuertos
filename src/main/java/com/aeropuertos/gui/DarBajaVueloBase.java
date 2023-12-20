@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author 34675
+ * @author Victor Fernandez
  */
 public class DarBajaVueloBase extends javax.swing.JDialog {
 
@@ -21,6 +21,7 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
     public DarBajaVueloBase(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("DAR BAJA VUELO BASE");
         filaseleccionada=-1;
        refrescatTabla();
 
@@ -51,6 +52,8 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
         lblVueloBase = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(780, 220));
 
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -145,9 +148,7 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

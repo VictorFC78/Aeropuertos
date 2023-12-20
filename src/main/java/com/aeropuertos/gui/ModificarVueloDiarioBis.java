@@ -29,6 +29,7 @@ public class ModificarVueloDiarioBis extends javax.swing.JDialog {
     public ModificarVueloDiarioBis(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("MODIFICAR VUELO DIARIO");
         modificarVueloDiario=(ModificarVueloDiario)parent;
         vueloDairio=modificarVueloDiario.getVueloDiarioSeleccionado();
         copiaVueloDiario=new VueloDiario(vueloDairio.getCodigo(),vueloDairio.getFechaVuelo(),
@@ -124,12 +125,16 @@ public class ModificarVueloDiarioBis extends javax.swing.JDialog {
         lblPlazas.setText("Plazas");
 
         spnFecha.setModel(new javax.swing.SpinnerDateModel());
+        spnFecha.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         spnHSalida.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.MINUTE));
+        spnHSalida.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         spnHLlegada.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.MINUTE));
+        spnHLlegada.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         spnPlazas.setModel(new javax.swing.SpinnerNumberModel());
+        spnPlazas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel13.setText("DATOS ACTUALES");
@@ -251,7 +256,7 @@ public class ModificarVueloDiarioBis extends javax.swing.JDialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnSalir)
                         .addComponent(btnDeshacer)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         pack();

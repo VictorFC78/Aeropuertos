@@ -14,8 +14,8 @@ import javax.swing.DefaultComboBoxModel;
 
 
 /**
- *
- * @author 34675
+ *@author Editor de propiedades para {@link JPanelApirestFull}
+ * 
  */
 public class EditorPropiedadesApirestFull extends javax.swing.JPanel implements Serializable{
 

@@ -18,6 +18,7 @@ public class ModificarCompaniaAerea extends javax.swing.JDialog {
         initComponents();
         refrescarTabla();
         lblCompania.setVisible(false);
+        setTitle("MODIFICAR COMPAÑIA AEREA");
     }
     public int getFilaSeleccionada(){
         return filaSeleccionada;
@@ -44,6 +45,8 @@ public class ModificarCompaniaAerea extends javax.swing.JDialog {
         lblCompania = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(780, 220));
 
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -80,7 +83,7 @@ public class ModificarCompaniaAerea extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

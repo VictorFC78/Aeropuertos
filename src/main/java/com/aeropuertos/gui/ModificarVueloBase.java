@@ -24,6 +24,7 @@ public class ModificarVueloBase extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         refrescatTabla();
+        setTitle("MODIFICAR VUELO BASE");
     }
     protected void refrescatTabla(){
         String[] columnames = {"Codigo", "Aeropuerto Origen", "Aeropuerto Destino", "Hora Salida", "Hora Llegada", "Plazas", "D Opera"};
@@ -62,6 +63,7 @@ public class ModificarVueloBase extends javax.swing.JDialog {
         lblVueloBase = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setSize(new java.awt.Dimension(780, 220));
 
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

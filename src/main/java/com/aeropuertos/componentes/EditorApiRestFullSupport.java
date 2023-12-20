@@ -9,8 +9,8 @@ import java.beans.PropertyEditorSupport;
 import java.io.Serializable;
 
 /**
- *
- * @author 34675
+ *@author Victor Fernandez
+ * Clase para el editor de propiedades {@link EditorApiRestFullSupport}
  */
 public class EditorApiRestFullSupport extends PropertyEditorSupport implements Serializable{
     private EditorPropiedadesApirestFull editor=new EditorPropiedadesApirestFull();

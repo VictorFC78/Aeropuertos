@@ -7,8 +7,8 @@ package com.aeropuertos.dto;
 
 
 /**
- *
- * @author 34675
+ * @author Victor Fernandez
+ *Clase Aeropuerto con los atributos iata,nombre,municipio
  */
 public class Aeropuerto {
     private String iata;
@@ -59,6 +59,9 @@ public class Aeropuerto {
     }
 
     @Override
+    /**
+     * Compara dos aeropuertos por su codigo IATA
+     */
     public boolean equals(Object obj) {
         return this.getIata().equals(((Aeropuerto)obj).getIata());
     }

@@ -5,19 +5,17 @@
 package com.aeropuertos.modelos;
 
 import com.aeropuertos.dto.Aeropuerto;
-import com.aeropuertos.dto.ComparadorVuelosHoras;
 import com.aeropuertos.dto.VueloBase;
 import com.aeropuertos.dto.VueloDiario;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
- *
- * @author 34675
+ *@author Victor Fernandez
+ * Hereda de {@link AbstractTableModel} para el modelo de datos de JDialog que muestra vuelos pertenecientes a una compañia
  */
 public class TableVuelosCompaniaModel extends AbstractTableModel{
 

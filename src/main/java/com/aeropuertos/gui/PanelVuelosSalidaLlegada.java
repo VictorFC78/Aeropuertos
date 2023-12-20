@@ -29,6 +29,7 @@ public class PanelVuelosSalidaLlegada extends javax.swing.JDialog {
     public PanelVuelosSalidaLlegada(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("VUELOS SALIDA/LLEGADA");
         buttonGroup1.add(rdSalida);
         buttonGroup1.add(rdLlegada);
         rdSalida.setSelected(true);
@@ -70,6 +71,7 @@ public class PanelVuelosSalidaLlegada extends javax.swing.JDialog {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         rdSalida.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         rdSalida.setText("Salida");
@@ -91,6 +93,7 @@ public class PanelVuelosSalidaLlegada extends javax.swing.JDialog {
         jLabel1.setText("Tipo deVuelo");
 
         spnFecha.setModel(new javax.swing.SpinnerDateModel());
+        spnFecha.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         spnFecha.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 spnFechaStateChanged(evt);
@@ -124,7 +127,7 @@ public class PanelVuelosSalidaLlegada extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)

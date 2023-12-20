@@ -16,6 +16,7 @@ public class PanelTemperaturas extends javax.swing.JDialog {
     public PanelTemperaturas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("TEMPERATURAS AEROPUERTOS");
        
     }
 
@@ -31,6 +32,7 @@ public class PanelTemperaturas extends javax.swing.JDialog {
         jpanelConsultarTemperaturas1 = new com.aeropuertos.componentes.JpanelConsultarTemperaturas();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

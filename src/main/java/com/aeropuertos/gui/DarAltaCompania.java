@@ -86,6 +86,7 @@ public class DarAltaCompania extends javax.swing.JDialog {
         comboMunicipio = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel1.setText("Nombre");
@@ -112,7 +113,7 @@ public class DarAltaCompania extends javax.swing.JDialog {
             }
         });
 
-        ButtonCancelar.setText("Cancelar");
+        ButtonCancelar.setText("Salir");
         ButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonCancelarActionPerformed(evt);
@@ -121,6 +122,10 @@ public class DarAltaCompania extends javax.swing.JDialog {
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("ALTA COMPAÑIA");
+
+        comboMunicipio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        comboMunicipio.setPreferredSize(new java.awt.Dimension(64, 22));
+        comboMunicipio.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,13 +144,13 @@ public class DarAltaCompania extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(ButtonAceptar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                         .addComponent(ButtonCancelar))
                     .addComponent(TextFieldNombre)
                     .addComponent(TextFieldDireccion)
                     .addComponent(TextFieldTlfPasaj)
                     .addComponent(TextFieldTlfAerpto)
-                    .addComponent(comboMunicipio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboMunicipio, 0, 195, Short.MAX_VALUE)
                     .addComponent(TextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37))
             .addGroup(layout.createSequentialGroup()
@@ -201,9 +206,6 @@ public class DarAltaCompania extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_ButtonCancelarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

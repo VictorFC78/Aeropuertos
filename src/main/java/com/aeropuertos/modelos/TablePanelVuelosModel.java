@@ -19,8 +19,8 @@ import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 
 /**
- *
- * @author 34675
+ *@author Victor Fernandez
+ * Hereda de {@link AbstractTableModel} para el modelo de datos de JDialog que muestra vuelos de salida y llegada
  */
 public class TablePanelVuelosModel extends AbstractTableModel{
     private List<VueloDiario> listaVuelosDiarios;

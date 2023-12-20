@@ -24,6 +24,7 @@ public class PanelVuelosTemperaturas extends javax.swing.JDialog {
     public PanelVuelosTemperaturas(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("TEMPERATURAS");
         panel=(PanelVuelosSalidaLlegada)parent; 
         vueloDiario=panel.getVueloDiarioSeleccionado();
         apiKey=LogicaNegocio.getApiKey();

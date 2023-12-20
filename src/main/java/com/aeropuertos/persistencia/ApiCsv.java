@@ -16,14 +16,22 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * @author Victor Fernandez
+ * Clase ApiCsv, clase que lee y escribe en ficheros en formato CSV y guarda los datos en memoria
+ */
 
 public class ApiCsv {
 
    public ApiCsv () {
        
    }
-   //lee los datos de un archivo csv y devuelve un objeto documento con todos los datos y las lineas que ocupan
+    /**
+    * metodo que lee los datos de un fichero en formato CSV los guarda en un objecto de tipo 
+    * {@link DocumentoCsv}
+    * @param fichero fichero del cual se va a leer y escribir
+    * @return DocumentoCsv o null
+    */
    public DocumentoCsv leerCSV(File fichero){
        if (fichero.length()!=0){
        BufferedReader bfr=null;
@@ -58,7 +66,13 @@ public class ApiCsv {
    } 
        return null;
    }
-   //escribe los datos en un fichero que recibe de un objeto documento que contiene todos los datos y las lineas que ocupan
+   /**
+    * metodo para escribir en un fichero en formato csv, con los datos que se obtienen de un objecto
+    * {@link DocumentoCsv}
+    * @param fichero fichero en el que se va a escribir
+    * @param csv Documentocsv con los datos para escribir
+    * @param anaidir true si solos se quiere añadir linea, false sobreescribir 
+    */
    public void escribirCSV(File fichero, DocumentoCsv csv, boolean anaidir){
        PrintWriter prw=null;
        int j=0;

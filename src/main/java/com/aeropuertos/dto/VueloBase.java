@@ -9,7 +9,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-
+/**
+ * @author Victor Fernandez
+ *Clase VueloBase con atributos codigo,origen,destino,plazas,horaSalida,horaLlegada,diasOpera,vuelosDiarios
+ */
 public class VueloBase {
     private String codigo;
     private Aeropuerto origen;
@@ -123,6 +126,9 @@ public class VueloBase {
 }
 
     @Override
+    /**
+     * Compara dos vuelos base por su codigo
+     */
     public boolean equals(Object obj) {
         VueloBase vuelo=(VueloBase)obj;
         return this.getCodigo().equals(vuelo.getCodigo());   

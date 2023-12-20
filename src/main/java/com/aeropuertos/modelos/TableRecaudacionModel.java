@@ -9,13 +9,12 @@ import com.aeropuertos.dto.VueloBase;
 import com.aeropuertos.dto.VueloDiario;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
- *
- * @author 34675
+ *@author Victor Fernandez
+ * Hereda de {@link AbstractTableModel} para el modelo de datos de JDialog que muestra la recaudacion de vuelos
  */
 public class TableRecaudacionModel extends AbstractTableModel {
 private List<VueloDiario> listaVuelosDiarios;

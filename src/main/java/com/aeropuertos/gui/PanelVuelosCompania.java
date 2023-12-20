@@ -33,6 +33,7 @@ public class PanelVuelosCompania extends javax.swing.JDialog {
     public PanelVuelosCompania(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("VUELOS POR COMPAÑIA");
         spnFecha.setEditor(new JSpinner.DateEditor(spnFecha, "dd/MM/yyyy"));
         listaCompanias=LogicaNegocio.getListaCompaniasAereas();
         modelo=new DefaultComboBoxModel<>();
@@ -65,9 +66,13 @@ public class PanelVuelosCompania extends javax.swing.JDialog {
         spnFecha = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(790, 300));
+        setSize(new java.awt.Dimension(790, 300));
 
+        comboCompania.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         comboCompania.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboCompaniaActionPerformed(evt);
@@ -75,6 +80,7 @@ public class PanelVuelosCompania extends javax.swing.JDialog {
         });
 
         spnFecha.setModel(new javax.swing.SpinnerDateModel());
+        spnFecha.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         spnFecha.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 spnFechaStateChanged(evt);
@@ -82,6 +88,8 @@ public class PanelVuelosCompania extends javax.swing.JDialog {
         });
 
         jScrollPane1.setViewportView(tabla);
+
+        btnSalir.setText("Salir");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,7 +103,10 @@ public class PanelVuelosCompania extends javax.swing.JDialog {
                         .addComponent(comboCompania, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(spnFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSalir)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -106,8 +117,10 @@ public class PanelVuelosCompania extends javax.swing.JDialog {
                     .addComponent(comboCompania, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spnFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(btnSalir)
+                .addGap(32, 32, 32))
         );
 
         pack();
@@ -125,6 +138,7 @@ public class PanelVuelosCompania extends javax.swing.JDialog {
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<CompaniaAerea> comboCompania;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner spnFecha;

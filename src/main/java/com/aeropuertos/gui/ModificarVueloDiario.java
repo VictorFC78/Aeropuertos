@@ -25,6 +25,7 @@ public class ModificarVueloDiario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         refrescarDatos();
+        setTitle("MODIFICAR VUELO DIARIO");
     }
     protected void refrescarDatos(){
         String[] columnames={"Codigo","Fecha","H.Salida","H.Llegada","Plazas Ocupadas","Precio"};
@@ -55,6 +56,8 @@ public class ModificarVueloDiario extends javax.swing.JDialog {
         lblDatos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(780, 220));
 
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

@@ -22,6 +22,7 @@ public class ConsultarCompaniasAereas extends javax.swing.JDialog {
         String [] columnames={"Codigo","Nombre","Direccion","Municipio","Tlf.Aeropuerto","Tlf.Pasajeros"};
         DefaultTableModel modelo=new DefaultTableModel(LogicaNegocio.datosCompaniasAereas(), columnames);
         tabla.setModel(modelo);
+        setTitle("COMPAÑIAS AEREAS");
     }
 
     /**
@@ -38,6 +39,9 @@ public class ConsultarCompaniasAereas extends javax.swing.JDialog {
         tabla = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(810, 260));
+        setResizable(false);
+        setSize(new java.awt.Dimension(810, 260));
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -64,9 +68,9 @@ public class ConsultarCompaniasAereas extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalir)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         pack();

@@ -11,8 +11,8 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
- *
- * @author 34675
+ *@author Victor Fernandez
+ * Hereda de {@link AbstractTableModel} para el modelo de datos de JDialog que muestra vuelos da un destino 
  */
 public class TableVueloDestinoModel extends AbstractTableModel {
     private List<VueloDiario> listaVuelos;

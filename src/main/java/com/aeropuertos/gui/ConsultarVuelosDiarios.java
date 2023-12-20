@@ -20,6 +20,7 @@ public class ConsultarVuelosDiarios extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         refrescarDatos();
+        setTitle("VUELOS DIARIOS");
     }
     public void refrescarDatos(){
         String[] columnames={"Codigo","Fecha","H.Salida","H.Llegada","Plazas Ocupadas","Precio"};
@@ -41,6 +42,9 @@ public class ConsultarVuelosDiarios extends javax.swing.JDialog {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 280));
+        setResizable(false);
+        setSize(new java.awt.Dimension(800, 280));
 
         jScrollPane1.setViewportView(jTable1);
 
@@ -71,7 +75,7 @@ public class ConsultarVuelosDiarios extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSalir)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();

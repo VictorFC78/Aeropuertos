@@ -7,8 +7,9 @@ package com.aeropuertos.dto;
 import java.util.Comparator;
 
 /**
- *
- * @author 34675
+ *@author Victor Fernandez
+ * Clase que hereda de Comparator, recibe por parametro dos objetos de VueloDiario
+ * y se comparan por sus horas de salida
  */
 public class ComparadorVuelosHoras implements Comparator<VueloDiario>{
 

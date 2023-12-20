@@ -5,8 +5,7 @@
 package com.aeropuertos.dto;
 
 /**
- *
- * @author 34675
+ * @author Victor Fernandez
  */
 public class Municipio {
     private String nombre;

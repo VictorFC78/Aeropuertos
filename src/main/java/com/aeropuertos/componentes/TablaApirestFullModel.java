@@ -7,8 +7,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 /**
- *
- * @author 34675
+ *@author Victor Fernandez
+ * Hereda de {@link AbstractTableModel}para el modelo de datos del {@link ApirestFullTemperaturas}
  */
 public class TablaApirestFullModel extends AbstractTableModel{
     //como sabemos formato de la tabla creamos su columnames y columclass

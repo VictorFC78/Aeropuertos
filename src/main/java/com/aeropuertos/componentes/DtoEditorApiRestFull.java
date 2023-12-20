@@ -7,8 +7,9 @@ package com.aeropuertos.componentes;
 import java.io.Serializable;
 
 /**
- *
- * @author 34675
+ *@author Victor Fernandez
+ * Clase DtoEditorApiRestFull, con atributos String municipio y String apikey, esta clase es utilizada 
+ * por {@link TablaApirestFullModel}
  */
 public class DtoEditorApiRestFull implements Serializable{
     private String municipio;

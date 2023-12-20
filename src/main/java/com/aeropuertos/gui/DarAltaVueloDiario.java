@@ -10,6 +10,7 @@ import com.aeropuertos.logica.LogicaNegocio;
 import com.aeropuertos.logica.ValidadorDatos;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -23,22 +24,31 @@ public class DarAltaVueloDiario extends javax.swing.JDialog {
     /**
      * Creates new form DarAltaVueloDiario
      */
-    private ConsultarVuelosDiarios consultarVuelosDiarios;
+    private List<VueloBase> listaVueloBase;
     private ConsultarVuelosBase consultarVuelosBase;
+    
     public DarAltaVueloDiario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("DAR ALTA VUELO DIARIO");
         spinnerFecha.setEditor(new JSpinner.DateEditor(spinnerFecha,"dd/MM/yyyy"));//formato de muestra fecha 
         spinnerHSalida.setEditor (new JSpinner.DateEditor(spinnerHSalida,"HH:mm"));
         spinnerHLlegada.setEditor(new JSpinner.DateEditor(spinnerHLlegada,"HH:mm"));
-        DefaultComboBoxModel<VueloBase> modelocombo=new DefaultComboBoxModel<>();
-        modelocombo.addAll(LogicaNegocio.getListaActualVuelosBase());
-        comboxCodigo.setModel(modelocombo);
-        comboxCodigo.setSelectedIndex(0);
-        consultarVuelosDiarios=new ConsultarVuelosDiarios(this, false);
         consultarVuelosBase=new ConsultarVuelosBase(this, false);
+        existenVuelosBase();
     }
-
+    private void existenVuelosBase(){
+        listaVueloBase=LogicaNegocio.getListaActualVuelosBase();
+        if (listaVueloBase==null || listaVueloBase.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No existen vuelos base","NO HAY REFERENCIAS DE VUELOS BASE",JOptionPane.ERROR_MESSAGE);
+            btnAceptar.setEnabled(false);
+        }else{
+             DefaultComboBoxModel<VueloBase> modelocombo=new DefaultComboBoxModel<>();
+            modelocombo.addAll(listaVueloBase);
+            comboxCodigo.setModel(modelocombo);
+            comboxCodigo.setSelectedIndex(0);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,8 +73,10 @@ public class DarAltaVueloDiario extends javax.swing.JDialog {
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel1.setText("Codigo Vuelo Base");
@@ -84,13 +96,19 @@ public class DarAltaVueloDiario extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel6.setText("Precio Total");
 
+        comboxCodigo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
         spinnerFecha.setModel(new javax.swing.SpinnerDateModel());
+        spinnerFecha.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         spinnerHSalida.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.MINUTE));
+        spinnerHSalida.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         spinnerHLlegada.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.MINUTE));
+        spinnerHLlegada.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         spinnerPlazas.setModel(new javax.swing.SpinnerNumberModel());
+        spinnerPlazas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -99,19 +117,22 @@ public class DarAltaVueloDiario extends javax.swing.JDialog {
             }
         });
 
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setText("Salir");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
 
-        btnConsultar.setText("Consultar");
+        btnConsultar.setText("Vuelo base");
         btnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConsultarActionPerformed(evt);
             }
         });
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setText("ALTA VUELO DIARIO");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,20 +143,23 @@ public class DarAltaVueloDiario extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spinnerHLlegada, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spinnerHSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spinnerFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spinnerPlazas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboxCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(50, 50, 50)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(spinnerHLlegada, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(spinnerHSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(spinnerFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(spinnerPlazas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(comboxCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel7)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addComponent(btnAceptar)
@@ -143,12 +167,14 @@ public class DarAltaVueloDiario extends javax.swing.JDialog {
                         .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnConsultar)))
-                .addGap(31, 31, 31))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(14, 14, 14)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboxCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -177,7 +203,7 @@ public class DarAltaVueloDiario extends javax.swing.JDialog {
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar)
                     .addComponent(btnConsultar))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         pack();
@@ -216,7 +242,9 @@ public class DarAltaVueloDiario extends javax.swing.JDialog {
                 horaSalida,horaLlegada,plazas,precioFinal);
             //creamos el vuelo y intentamos añadirlo si es capaz de añadirlo , si es capaz lo añade retoen atrue
             if (LogicaNegocio.anaidirVueloDiarioVueloBase(vueloBase,vd)){
-                 //consultarVuelosDiarios.refrescarDatos();
+                JOptionPane.showMessageDialog(this, "Se ha creado el vuelo diario "
+                        +vd.getCodigo());
+ 
             }else{
                 JOptionPane.showMessageDialog(this, "Existe coincidencia con otro vuelo", "COINCIDENCIA VUELO", JOptionPane.ERROR_MESSAGE);
             }
@@ -247,6 +275,7 @@ public class DarAltaVueloDiario extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JSpinner spinnerFecha;
     private javax.swing.JSpinner spinnerHLlegada;
     private javax.swing.JSpinner spinnerHSalida;

@@ -12,8 +12,8 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
 /**
- *
- * @author 34675
+ *@author Panel de consulta de temperaturas por aeropuerto
+ * 
  */
 public class JpanelConsultarTemperaturas extends javax.swing.JPanel implements Serializable{
 

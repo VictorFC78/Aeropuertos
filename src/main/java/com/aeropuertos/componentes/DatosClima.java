@@ -1,5 +1,8 @@
 package com.aeropuertos.componentes;
-
+/**
+ * @author Victor Fernandez
+ * Clase DatosClima con atributo String tmin y Sring tmax, y que es utilizada por {@link ApirestFullTemperaturas}
+ */
 
 public class DatosClima {
     private String tmin;

@@ -3,7 +3,10 @@ package com.aeropuertos.dto;
 
 import java.io.Serializable;
 
-
+/**
+ * @author Victor Fernandez
+ *Clase CompañiaAerea con los atributos nombre,direccion,municipio,tlfPasajeros,tlfAeropuertos,codigo,prefijo
+ */
 public class CompaniaAerea implements Serializable{
     private String nombre;
     private String direccion;
@@ -107,6 +110,9 @@ public class CompaniaAerea implements Serializable{
  
     
     @Override
+    /**
+     * Compara dos compañias por su codigo
+     */
     public boolean equals(Object obj) {
         CompaniaAerea compania=(CompaniaAerea)obj;
         if (this.getCodigo().equals(compania.getCodigo()) 

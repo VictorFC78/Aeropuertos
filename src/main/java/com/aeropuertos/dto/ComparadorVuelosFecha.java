@@ -9,8 +9,9 @@ import java.time.LocalDate;
 import java.util.Comparator;
 
 /**
- *
- * @author 34675
+ *@author Victor Fernandez
+ * Clase que hereda de Comprator, recibe por parametro dos objetos de VueloDiario
+ * y se comparan por sus fechas de vuelo
  */
 public class ComparadorVuelosFecha implements Comparator<VueloDiario> {
 

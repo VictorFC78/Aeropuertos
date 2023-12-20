@@ -7,7 +7,11 @@ package com.aeropuertos.persistencia;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
+/**
+ * @author Victor Fernandez
+ * Clase que tiene como arguemtos una lista de Strings y un entero, se utiliza el conjunto con
+ * la clase {@link ApiCsv}
+ */
 public class DocumentoCsv {
     private ArrayList<String> datos;
     private int numLineas;

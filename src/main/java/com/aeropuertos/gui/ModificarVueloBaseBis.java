@@ -72,6 +72,7 @@ public class ModificarVueloBaseBis extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        spnCodigo = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -86,7 +87,6 @@ public class ModificarVueloBaseBis extends javax.swing.JDialog {
         lblHSalida = new javax.swing.JLabel();
         lblHLlegada = new javax.swing.JLabel();
         lblDiasOpera = new javax.swing.JLabel();
-        spnCodigo = new javax.swing.JSpinner();
         comboAOrigen = new javax.swing.JComboBox<>();
         comboADestino = new javax.swing.JComboBox<>();
         spnHSalida = new javax.swing.JSpinner();
@@ -101,6 +101,9 @@ public class ModificarVueloBaseBis extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         spnPlazas = new javax.swing.JSpinner();
         lblPlazas = new javax.swing.JLabel();
+
+        spnCodigo.setModel(new javax.swing.SpinnerNumberModel());
+        spnCodigo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(570, 430));
@@ -148,14 +151,17 @@ public class ModificarVueloBaseBis extends javax.swing.JDialog {
         lblDiasOpera.setForeground(new java.awt.Color(0, 204, 204));
         lblDiasOpera.setText("jLabel14");
 
-        spnCodigo.setModel(new javax.swing.SpinnerNumberModel());
-
+        comboAOrigen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         comboAOrigen.setMinimumSize(new java.awt.Dimension(200, 22));
         comboAOrigen.setName(""); // NOI18N
 
+        comboADestino.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
         spnHSalida.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.MINUTE));
+        spnHSalida.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         spnHLlegada.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.MINUTE));
+        spnHLlegada.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel15.setText("Tipo de Vuelo");
@@ -199,6 +205,8 @@ public class ModificarVueloBaseBis extends javax.swing.JDialog {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel9.setText("Plazas");
+
+        spnPlazas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         lblPlazas.setForeground(new java.awt.Color(0, 204, 204));
         lblPlazas.setText("jLabel10");
@@ -254,7 +262,6 @@ public class ModificarVueloBaseBis extends javax.swing.JDialog {
                                             .addComponent(rbtnSalida)
                                             .addComponent(rbtnLlegada)))
                                     .addComponent(spnPlazas, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spnCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(comboADestino, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(comboAOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -272,8 +279,7 @@ public class ModificarVueloBaseBis extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(lblCodigo)
-                    .addComponent(spnCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblCodigo))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)

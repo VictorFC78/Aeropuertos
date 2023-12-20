@@ -21,8 +21,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
- * @author 34675
+ * @author Victor Fernandez
+ *Clase static para leer y escribir en la persistencia con la ayuda de la clase {@link LogicaNegocio}
  */
 public class Persistencia {
     private static final File AEROPUERTOS=new File("aeropuertos.csv");
@@ -34,25 +34,44 @@ public class Persistencia {
     private static SimpleDateFormat formatoFecha=new SimpleDateFormat("dd/MM/yyyy");
     
     /*******************************Metodos Comunes**************************************/
-    //convertir de string a localTime
+   /**
+    * metodo de casting de String a LocalTime
+    * @param hora hora que se quiere hacer casting
+    * @return Localtime
+    */
    public static LocalTime parseStringLocalTime(String hora){ 
        return LocalTime.parse(hora);
    }
-   //convertir localtime a srring con formatoHora HH:mm.
+   /**
+    * metodo de casting de String a LocalTime
+    * @param time time que se quiere castear a String
+    * @return LocalTime
+    */
    public static String parseLocalTimeString(LocalTime time){      
       return time.format(DateTimeFormatter.ofPattern("HH:mm"));
    }
-   //convertir de string a Date
+   /**
+    * metodo de casting de Date a String
+    * @param fecha fecah que se quiere castear a Date
+    * @return 
+    */
    public static Date parseStrinDate(String fecha){
        return formatoFecha.parse(fecha,new ParsePosition(0));
    }
-   //convertir de Date a String
+   /**
+    * metodo de castring de fecha a string
+    * @param fecha fecah a castear a string
+    * @return String
+    */
    public static String parseDateString(Date fecha){
-        return formatoHora.format(fecha);
+        return formatoFecha.format(fecha);
    }
     /****************************************************************************************/
    
     /****************************Aeropuertos***************************************************/
+   /**
+    * metodo que rellena una lista de aeropuertos en memoria extrayendo los datos de un fichero
+    */
     public static void  leerListaAeropuertosCsv(){
         if (AEROPUERTOS.exists()){
         DocumentoCsv csv;//creamos el documento que contendra el contenido del archivo csv
@@ -65,13 +84,16 @@ public class Persistencia {
             temp.add(csv.getElemnto(i));
             indice++;
             if (indice == datosLinea) {
-                LogicaNegocio.anaidirAeropuertoPersintencia(new Aeropuerto(temp.get(0), temp.get(1), temp.get(2)));
+                LogicaNegocio.anaidirAeropuertoLista(new Aeropuerto(temp.get(0), temp.get(1), temp.get(2)));
                 indice = 0;
                 temp.clear();
             }
        } 
     }   
 }
+    /**
+     * metodo que rellena una lista de {@link Municipio} extrayendo los datos de un fichero
+     */
     public static void leerMunicipiosCsv(){
         if(MUNICIPIOS.exists() & MUNICIPIOS.length()!=0){
             DocumentoCsv csv;
@@ -96,7 +118,10 @@ public class Persistencia {
    /*****************************C****************************************************************/
     
     /*****************************Compañias*******************************************************/
-    //lee los datosCsv de un archivo csv y carga en la lista de compañias las compañias existentes en el csva
+   /**
+    * metodo que lee de un fichero las compañias y las inserta en una lista en memoria con ayuda de 
+    * {@link LogicaNegocio}
+    */
    public static void leerCompaniaAereasCsv(){
        if(COMPANIAS.exists()){
         DocumentoCsv csv;//creamos el documento que contendra el contenido del archivo csv
@@ -122,7 +147,11 @@ public class Persistencia {
     }
    }
       
-   //devuelve los datosCsv de una compañia que recibe de datoa de un array de un csv
+   /**
+    * metodo que extrae los atributos de las compañias en una lista y los retorna en un array de String
+    * @param lista lista de compañias aereas
+    * @return array String
+    */
     private static String [] extraerDatosCompaniaCsv(ArrayList<String> lista){
        String[] datos=new String[7];
        datos[0]=lista.get(0);
@@ -134,7 +163,10 @@ public class Persistencia {
        datos[6]=lista.get(6);
        return datos;
     }
-  //escribir fichero CSV las compañias que contiene la lista de compañias
+  /**
+   * escribe en un fichero la lista de compañias existentes en la lista de compañias
+   * @return boolean si no hay error, flase si hay error
+   */
     public static boolean escribirCompaniaCsv(){
         if (LogicaNegocio.getListaCompaniasAereas().isEmpty()) return false;
         else{
@@ -163,16 +195,21 @@ public class Persistencia {
     
     
     /*********************************Vuelos Base*****************************************************/
-    //recupera un documento con tod los datos del csv
+   /**
+    * metodo que extrae los datos en un fichero y los devuelve en un objecto {@link DocumentoCsv}
+    * @return {@link DocumentoCsv}
+    */
    private static DocumentoCsv extraerDatosCsvVuelosBase(){
-       DocumentoCsv csv=new DocumentoCsv();
+       DocumentoCsv csv;
        ApiCsv apiCsv=new ApiCsv();
        csv=apiCsv.leerCSV(VUELOS_BASE);
        return csv;
    }
-   
+    /**
+     * metodo que extrae todo los datos de un fichero y los utiliza con ayuda de {@link LogicaNegocio}
+     * para crear vuelos base e añadirlos a una lista
+     */
    public static void leerListaVuelosBaseCsv(){
-        
         List<Aeropuerto> listaAeropuertos=extraerDatosAeropuertos();//recupera la lista con todos los aeropuertos del csv
         List<String> listaDatosVuelo=extraerDatosVuelo();//todos los datos correspodientes a cada vuelo sin los aeropuertos
         int j=0;
@@ -198,14 +235,17 @@ public class Persistencia {
                 int plazas=Integer.parseInt(temp.get(1));
                 VueloBase vuelo=new VueloBase(codigo,origen,destino,plazas,
                         parseStringLocalTime(hSalida),parseStringLocalTime(hLlegada),diasOpera);
-                LogicaNegocio.anaidirVueloBasePersistencia(vuelo);
+                LogicaNegocio.anaidirVueloBaseListaCompleta(vuelo);
                 temp.clear();
                 j=0;
             }
         }
        }
     
-     //extraer del DocumentoCsv los datos del aeropuerto de destino y origen, y los devuelve en una lista de aeropuertos
+        /**
+     * metodo que extrae todo los datos de un fichero y los utiliza con ayuda de {@link LogicaNegocio}
+     * para crear aeropuertos e añadirlos a una lista
+     */
     private static  List<Aeropuerto> extraerDatosAeropuertos(){
         DocumentoCsv csv=extraerDatosCsvVuelosBase();
         ArrayList<String> totalDatos=csv.getDatos();//total de todos los datos del csv
@@ -227,7 +267,11 @@ public class Persistencia {
         }
         return aeropuertos;
     }
-     //extraer del DocumentoCsv los datos correspondientes al vuelo con excepcion del los aeropuertos y los devuelve el una lista
+    /**
+     * metodo que extrae de un {@limk DocumentoCsv} los datos correspondientes al vuelo con 
+     * excepcion del los aeropuertos y los devuelve el una lista de string
+     * @return lista de string
+     */
     private static List<String> extraerDatosVuelo(){
         DocumentoCsv csv=extraerDatosCsvVuelosBase();
         ArrayList<String> totalDatos=csv.getDatos();//total de todos los datos del csv
@@ -245,7 +289,9 @@ public class Persistencia {
         return datosVuelo;
     }
     
-    //escribir vuelos base al fichero csv
+    /**
+     * metodo que escribe en un fichero todos los vuelos base incluidos en una lista
+     */
     public static void escribirListaVuelosBaseCsv(){
         //borrar el ficehro para garbar todos los datos
        if(VUELOS_BASE.exists())VUELOS_BASE.delete();
@@ -261,7 +307,11 @@ public class Persistencia {
                 }   
         }    
     }
-    //extrae los datos de los aeropuertos para utilizarlos en la escritura del Csv
+    /**
+     * metodo que extrae los datos de los aeropuertos para utilizarlos en la escritura del fichero
+     * @param aeropuerto aeropuero a escribir
+     * @return lista de string
+     */
     private static ArrayList<String> datosAeropuertos(Aeropuerto aeropuerto){
         ArrayList<String> temp=new ArrayList<>();
         temp.add(aeropuerto.getIata());
@@ -269,7 +319,12 @@ public class Persistencia {
         temp.add(aeropuerto.getMunicipio());
         return temp;
     }
-     //extrae los restantes datos del vuelo exceptuando los aeropuertos para utilzarlos en la escritura del csv
+    /**
+     * metodo que extrae los restantes datos de un  vuelo base exceptuando los aeropuertos para utilzarlos 
+     * en la escritura del csv 
+     * @param vuelo vuelo a extraer datos
+     * @return lista de string
+     */
     private static ArrayList<String> datosPropiosVuelo(VueloBase vuelo){
         ArrayList<String> temp=new ArrayList<>();
         temp.add(vuelo.getCodigo());
@@ -280,7 +335,11 @@ public class Persistencia {
         return temp;
         
     }
-     //escribe en el archivo una linea con los datos correspondientes,con apertura en la ultima linea
+    /**
+     * metodo que escribe en un fichero una linea con los datos correspondientes,con apertura en la ultima linea
+     * @param lista  lista que se va a escribir
+     */
+     //
     private static void escribirLineaDatos(ArrayList<String> lista){
         DocumentoCsv csv=new DocumentoCsv();
         ApiCsv apiCsv=new ApiCsv();
@@ -291,9 +350,13 @@ public class Persistencia {
      /***************************************************************************************************/
     
      /*********************************Vuelos Diarios*****************************************************/
-    //recupera toda la informacion de los vuelos diarios del csv y los guarda en una variable DocuemntoCsv
+    /**
+     *metodo que recupera toda la informacion de los vuelos diarios de un fichero 
+     * y los guarda en una variable {@link DocuemntoCsv}
+     * @return {@link DocuemntoCsv} o null
+     */
+    //
     private static DocumentoCsv extraerDatosVuelosDiariosCsv(){
-        
         if(VUELOS_DIARIOS.exists()& VUELOS_DIARIOS.length()!=0){
          // recupera los datos del csv en una lista de string el numero de lineas total, cada linea va a ocupar 6 datos 
          DocumentoCsv csv;
@@ -303,7 +366,10 @@ public class Persistencia {
         }
         return null;
     }
-    //guarda en una lista en memoria los vuelos diarion
+    /**
+     * metodo que lee de un fichero vuelos diarios creando uno a uno e insertandolos en una lista 
+     * mediante {@link  LogicaNegocio}
+     */
     public static void leerListaVuelosDiariosCsv(){
         DocumentoCsv csv;
         if ((csv =extraerDatosVuelosDiariosCsv())!=null){
@@ -322,19 +388,21 @@ public class Persistencia {
                  VueloDiario vueloD=new VueloDiario(temp.get(0), parseStrinDate(temp.get(1)),
                          parseStringLocalTime(temp.get(2)),parseStringLocalTime(temp.get(3))
                          ,Integer.parseInt(temp.get(4)),Double.parseDouble( temp.get(5)));
-                 LogicaNegocio.anaidirVueloDiarioListaPersistencia(vueloD);
+                 LogicaNegocio.anaidirVueloDiarioListaCompleta(vueloD);
                  j=0;
                  temp.clear();
                 }
             }
         }
     }
-     //escribe los vuelos diarios en memoria al archivo csv
+    /**
+     * metodo que escribe los vuelos diarios de un lista  en un fichero
+     */
     public static void escribirVuelosDiariosCsv() {
         //extraer todos lod datos de la lista en memoria, crea una lista de strings y el numero total de linea 
-        if(!LogicaNegocio.getListaVuelosDIariosCompleta().isEmpty()){
+        if(!LogicaNegocio.getListaVuelosDiariosCompleta().isEmpty()){
             //recorremos la lista para extaer los vuelos diarios y sus datos
-            List<VueloDiario> lista=LogicaNegocio.getListaVuelosDIariosCompleta();
+            List<VueloDiario> lista=LogicaNegocio.getListaVuelosDiariosCompleta();
             ArrayList<String> datos=new ArrayList<>();
             for (int i=0;i<lista.size();i++){
                 String[] temp=extarerDatosListaVuelosDiarios(lista.get(i));//extrae datos de cada vuelo
@@ -349,7 +417,11 @@ public class Persistencia {
             apiCsv.escribirCSV(VUELOS_DIARIOS, csv, false);
         }
     }
-    //extrae los datos para guardarlos en memoria csv
+    /**
+     * metodo que extrae los tributos  de un vuelo diario y los devuelkve en un array de string
+     * @param vuelo vuelo que se quiere extraer sus datos
+     * @return array String
+     */
      public static String[] extarerDatosListaVuelosDiarios(VueloDiario vuelo){
         if (vuelo!=null){
             String datos[]=new String[6];

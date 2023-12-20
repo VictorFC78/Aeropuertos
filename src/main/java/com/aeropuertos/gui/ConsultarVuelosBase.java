@@ -20,6 +20,7 @@ public class ConsultarVuelosBase extends javax.swing.JDialog {
         String[] columnames={"Codigo","Aeropuerto Origen","Aeropuerto Destino","Hora Salida","Hora Llegada","Plazas","D Opera"};
         DefaultTableModel modelo=new DefaultTableModel(LogicaNegocio.datosVueloBase(), columnames);
         tabla.setModel(modelo);
+        setTitle("VUELOS BASE");
     }
 
     /**
@@ -36,6 +37,9 @@ public class ConsultarVuelosBase extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 280));
+        setResizable(false);
+        setSize(new java.awt.Dimension(800, 280));
 
         jScrollPane1.setViewportView(tabla);
 

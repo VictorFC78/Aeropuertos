@@ -45,12 +45,18 @@ public class PantallaPrincipal extends javax.swing.JFrame {
    private JFXPanel jFXPanel;
    private Aeropuerto aeropuertoBase;
    private List<Aeropuerto> listaAeropuertosNoBase=new ArrayList<>();
+   private List<Aeropuerto> listaOriginal;
     public PantallaPrincipal() {
         initComponents();
-        DefaultComboBoxModel<Aeropuerto> modelo=new DefaultComboBoxModel<Aeropuerto>();
-        modelo.addAll(LogicaNegocio.getListaAeropuertosOriginal());
-        comboBoxAeropuertos.setModel(modelo);
-        comboBoxAeropuertos.setSelectedIndex(1);
+        listaOriginal=LogicaNegocio.getListaAeropuertosOriginal();
+        if(!listaOriginal.isEmpty()){
+            DefaultComboBoxModel<Aeropuerto> modelo=new DefaultComboBoxModel<Aeropuerto>();
+            modelo.addAll(LogicaNegocio.getListaAeropuertosOriginal());
+            comboBoxAeropuertos.setModel(modelo);
+            comboBoxAeropuertos.setSelectedIndex(1);
+        }else{
+           btnSeleccionar.setEnabled(false); 
+        }
         mnuCompania.setEnabled(false);
         mnuVuelosBase.setEnabled(false);
         mnuVuelosDiarios.setEnabled(false);
@@ -62,6 +68,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         btnAyudaVB.setVisible(false);
         btnAyudaVD.setVisible(false);
         setHelp();
+        if(listaOriginal.isEmpty())JOptionPane.showMessageDialog(this, "Fichero de Aeropuerto no existe,o esta vacio","ERROR LECTURA FICHERO", JOptionPane.ERROR_MESSAGE);
     }
     private void setHelp(){
         //instanciamos el frame con el jfxpanel que va a recibir nuestra HTML de ayuda

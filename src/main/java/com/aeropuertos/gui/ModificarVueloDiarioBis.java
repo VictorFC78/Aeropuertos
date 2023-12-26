@@ -101,27 +101,27 @@ public class ModificarVueloDiarioBis extends javax.swing.JDialog {
         jLabel6.setText("Precio");
 
         lblPrecio.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        lblPrecio.setForeground(new java.awt.Color(0, 204, 204));
+        lblPrecio.setForeground(new java.awt.Color(0, 150, 150));
         lblPrecio.setText("Precio");
 
         lblCodigo.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        lblCodigo.setForeground(new java.awt.Color(0, 204, 204));
+        lblCodigo.setForeground(new java.awt.Color(0, 150, 150));
         lblCodigo.setText("Codigo");
 
         lblFecha.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        lblFecha.setForeground(new java.awt.Color(0, 204, 204));
+        lblFecha.setForeground(new java.awt.Color(0, 150, 150));
         lblFecha.setText("Fecha ");
 
         lblHSalida.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        lblHSalida.setForeground(new java.awt.Color(0, 204, 204));
+        lblHSalida.setForeground(new java.awt.Color(0, 150, 150));
         lblHSalida.setText("H.Salida");
 
         lblHLlegada.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        lblHLlegada.setForeground(new java.awt.Color(0, 204, 204));
+        lblHLlegada.setForeground(new java.awt.Color(0, 150, 150));
         lblHLlegada.setText("H.Legada");
 
         lblPlazas.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        lblPlazas.setForeground(new java.awt.Color(0, 204, 204));
+        lblPlazas.setForeground(new java.awt.Color(0, 150, 150));
         lblPlazas.setText("Plazas");
 
         spnFecha.setModel(new javax.swing.SpinnerDateModel());

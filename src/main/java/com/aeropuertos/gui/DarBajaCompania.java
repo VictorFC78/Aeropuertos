@@ -73,7 +73,8 @@ private CompaniaAerea compania=null;
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("COMPAÑIA SELECCIONADA:");
 
-        lblCompSelect.setForeground(new java.awt.Color(255, 0, 51));
+        lblCompSelect.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblCompSelect.setForeground(new java.awt.Color(255, 0, 0));
         lblCompSelect.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

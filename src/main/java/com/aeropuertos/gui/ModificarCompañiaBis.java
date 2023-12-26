@@ -121,27 +121,27 @@ public class ModificarCompañiaBis extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel8.setText("Tlf Pasajeros");
 
-        lblCodigo.setForeground(new java.awt.Color(0, 204, 204));
+        lblCodigo.setForeground(new java.awt.Color(0, 150, 150));
         lblCodigo.setText("jLabel9");
         lblCodigo.setPreferredSize(new java.awt.Dimension(194, 16));
 
-        lblNombre.setForeground(new java.awt.Color(0, 204, 204));
+        lblNombre.setForeground(new java.awt.Color(0, 150, 150));
         lblNombre.setText("jLabel10");
         lblNombre.setPreferredSize(new java.awt.Dimension(194, 16));
 
-        lblDireccion.setForeground(new java.awt.Color(0, 204, 204));
+        lblDireccion.setForeground(new java.awt.Color(0, 150, 150));
         lblDireccion.setText("jLabel11");
         lblDireccion.setPreferredSize(new java.awt.Dimension(194, 16));
 
-        lblMunicipio.setForeground(new java.awt.Color(0, 204, 204));
+        lblMunicipio.setForeground(new java.awt.Color(0, 150, 150));
         lblMunicipio.setText("jLabel12");
         lblMunicipio.setPreferredSize(new java.awt.Dimension(194, 16));
 
-        lblTlfAepto.setForeground(new java.awt.Color(0, 204, 204));
+        lblTlfAepto.setForeground(new java.awt.Color(0, 150, 150));
         lblTlfAepto.setText("jLabel13");
         lblTlfAepto.setPreferredSize(new java.awt.Dimension(194, 16));
 
-        lblTlfPsjro.setForeground(new java.awt.Color(0, 204, 204));
+        lblTlfPsjro.setForeground(new java.awt.Color(0, 150, 150));
         lblTlfPsjro.setText("jLabel14");
         lblTlfPsjro.setPreferredSize(new java.awt.Dimension(194, 16));
 

@@ -84,7 +84,7 @@ public class ModificarVueloDiario extends javax.swing.JDialog {
         jLabel1.setText("VUELO DIARIO");
 
         lblDatos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblDatos.setForeground(new java.awt.Color(255, 0, 153));
+        lblDatos.setForeground(new java.awt.Color(255, 0, 0));
         lblDatos.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

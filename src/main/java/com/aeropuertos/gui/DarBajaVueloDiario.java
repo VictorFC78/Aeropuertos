@@ -78,6 +78,8 @@ public class DarBajaVueloDiario extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("VUELO DIARIO");
 
+        lblDatos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblDatos.setForeground(new java.awt.Color(255, 0, 0));
         lblDatos.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

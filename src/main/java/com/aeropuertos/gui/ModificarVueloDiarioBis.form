@@ -194,7 +194,7 @@
           <Font name="Segoe UI" size="12" style="3"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="cc" red="0" type="rgb"/>
+          <Color blue="96" green="96" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Precio"/>
       </Properties>
@@ -205,7 +205,7 @@
           <Font name="Segoe UI" size="12" style="3"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="cc" red="0" type="rgb"/>
+          <Color blue="96" green="96" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Codigo"/>
       </Properties>
@@ -216,7 +216,7 @@
           <Font name="Segoe UI" size="12" style="3"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="cc" red="0" type="rgb"/>
+          <Color blue="96" green="96" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Fecha "/>
       </Properties>
@@ -227,7 +227,7 @@
           <Font name="Segoe UI" size="12" style="3"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="cc" red="0" type="rgb"/>
+          <Color blue="96" green="96" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="H.Salida"/>
       </Properties>
@@ -238,7 +238,7 @@
           <Font name="Segoe UI" size="12" style="3"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="cc" red="0" type="rgb"/>
+          <Color blue="96" green="96" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="H.Legada"/>
       </Properties>
@@ -249,7 +249,7 @@
           <Font name="Segoe UI" size="12" style="3"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="cc" red="0" type="rgb"/>
+          <Color blue="96" green="96" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Plazas"/>
       </Properties>

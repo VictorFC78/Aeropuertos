@@ -80,7 +80,7 @@ public class DarBajaVueloBase extends javax.swing.JDialog {
         jLabel1.setText("VUELO BASE");
 
         lblVueloBase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblVueloBase.setForeground(new java.awt.Color(255, 0, 153));
+        lblVueloBase.setForeground(new java.awt.Color(255, 0, 0));
         lblVueloBase.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

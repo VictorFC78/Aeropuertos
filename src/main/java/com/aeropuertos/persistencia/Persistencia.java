@@ -73,7 +73,7 @@ public class Persistencia {
     * metodo que rellena una lista de aeropuertos en memoria extrayendo los datos de un fichero
     */
     public static void  leerListaAeropuertosCsv(){
-        if (AEROPUERTOS.exists()){
+        if (AEROPUERTOS.exists()&& AEROPUERTOS.length()!=0){
         DocumentoCsv csv;//creamos el documento que contendra el contenido del archivo csv
         ApiCsv apiCsv = new ApiCsv();//creamos el manejador de archivos csv   
         csv = apiCsv.leerCSV(AEROPUERTOS);

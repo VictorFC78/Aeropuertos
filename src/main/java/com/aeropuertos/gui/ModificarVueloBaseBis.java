@@ -133,22 +133,28 @@ public class ModificarVueloBaseBis extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel8.setText("Dias Opera");
 
-        lblCodigo.setForeground(new java.awt.Color(0, 204, 204));
+        lblCodigo.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        lblCodigo.setForeground(new java.awt.Color(0, 150, 150));
         lblCodigo.setText("jLabel9");
 
-        lblArptoSalida.setForeground(new java.awt.Color(0, 204, 204));
+        lblArptoSalida.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        lblArptoSalida.setForeground(new java.awt.Color(0, 150, 150));
         lblArptoSalida.setText("jLabel10");
 
-        lblArptoLlegada.setForeground(new java.awt.Color(0, 204, 204));
+        lblArptoLlegada.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        lblArptoLlegada.setForeground(new java.awt.Color(0, 150, 150));
         lblArptoLlegada.setText("jLabel11");
 
-        lblHSalida.setForeground(new java.awt.Color(0, 204, 204));
+        lblHSalida.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        lblHSalida.setForeground(new java.awt.Color(0, 150, 150));
         lblHSalida.setText("jLabel12");
 
-        lblHLlegada.setForeground(new java.awt.Color(0, 204, 204));
+        lblHLlegada.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        lblHLlegada.setForeground(new java.awt.Color(0, 150, 150));
         lblHLlegada.setText("jLabel13");
 
-        lblDiasOpera.setForeground(new java.awt.Color(0, 204, 204));
+        lblDiasOpera.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        lblDiasOpera.setForeground(new java.awt.Color(0, 150, 150));
         lblDiasOpera.setText("jLabel14");
 
         comboAOrigen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -208,7 +214,8 @@ public class ModificarVueloBaseBis extends javax.swing.JDialog {
 
         spnPlazas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblPlazas.setForeground(new java.awt.Color(0, 204, 204));
+        lblPlazas.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        lblPlazas.setForeground(new java.awt.Color(0, 150, 150));
         lblPlazas.setText("jLabel10");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

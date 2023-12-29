@@ -27,6 +27,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 
 
@@ -46,7 +48,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
    private Aeropuerto aeropuertoBase;
    private List<Aeropuerto> listaAeropuertosNoBase=new ArrayList<>();
    private List<Aeropuerto> listaOriginal;
-    public PantallaPrincipal() {
+    public PantallaPrincipal() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         initComponents();
         listaOriginal=LogicaNegocio.getListaAeropuertosOriginal();
         if(!listaOriginal.isEmpty()){

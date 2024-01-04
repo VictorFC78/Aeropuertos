@@ -22,6 +22,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 
@@ -108,9 +110,11 @@ public class LogicaNegocio {
      * rellena una lista con los aeropuertos de destino de la aplicacion
      */
     private static void rellenarListaAeropuetosDestino(){
-        for (Aeropuerto a:listaAeropuertos){
-            if(!a.equals(aeropuertoOrigen))listAeropuertosDestino.add(a);
-        }
+//        for (Aeropuerto a:listaAeropuertos){
+//            if(!a.equals(aeropuertoOrigen))listAeropuertosDestino.add(a);
+//        }
+         listAeropuertosDestino=listaAeropuertos.stream()
+                 .filter(p->!p.equals(aeropuertoOrigen)).collect(Collectors.toList());
     }
     /**
      * añade un aeropuerto a la lista inicial de aeropuertos
@@ -142,10 +146,12 @@ public class LogicaNegocio {
      * @return compañia
      */
     public static CompaniaAerea getCompaniaAerea(String codigo){
-        for (CompaniaAerea a:listaCompaniaAerea){
-            if(a.getCodigo().equals(codigo))return a;
-        }
-        return null;
+//        for (CompaniaAerea a:listaCompaniaAerea){
+//            if(a.getCodigo().equals(codigo))return a;
+//        }
+//        return null;
+        Optional<CompaniaAerea> op=listaCompaniaAerea.stream().filter(p->p.getCodigo().equals(codigo)).findFirst();
+        return op.isPresent()? op.get():null;
     }
     /**
      * metodo que retorna una compañia aerea por su posicion en la lista
@@ -446,8 +452,13 @@ public class LogicaNegocio {
         Collections.sort(listaActualVuelosDiarios,(v1,v2)->{
             return v1.getHoraSlida().compareTo(v2.getHoraSlida());
         });
-        Collections.sort(listaActualVuelosDiarios, new ComparadorVuelosFecha());
-        
+        Collections.sort(listaActualVuelosDiarios, (v1,v2)->{
+            SimpleDateFormat formato =new SimpleDateFormat("yyyy-MM-dd");
+            LocalDate dateVule1=LocalDate.parse(formato.format(v1.getFechaVuelo()));
+            LocalDate dateVule2=LocalDate.parse(formato.format(v2.getFechaVuelo()));
+            return dateVule1.compareTo(dateVule2);
+        });
+        //Collections.sort(listaActualVuelosDiarios, new ComparadorVuelosFecha());   
     }
     /**
      * metodo que retorna la lista completa de vuelos diarios
